@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>特定商取引法に基づく表記 | ANIGIFT</title>
+  <meta name="description" content="ANIGIFT（アニギフト）の特定商取引法に基づく表記ページです。" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;900&family=Noto+Sans+JP:wght@400;500;700;900&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --bg: #0a0a12;
+      --bg-card: #13131f;
+      --text: #f0eff4;
+      --text-sub: #9a99a8;
+      --text-muted: #5a5968;
+      --pink: #FF2D78;
+      --gold: #FFB800;
+      --border: rgba(255,255,255,.06);
+      --font: 'Inter', 'Noto Sans JP', sans-serif;
+    }
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+    html { scroll-behavior: smooth; -webkit-font-smoothing: antialiased; }
+    body {
+      font-family: var(--font);
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.8;
+      min-height: 100vh;
+    }
+    a { color: inherit; text-decoration: none; }
+
+    /* Nav */
+    .nav {
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 0 clamp(20px, 5vw, 48px); height: 68px;
+      background: rgba(10,10,18,.92); backdrop-filter: blur(20px);
+      border-bottom: 1px solid var(--border);
+      position: sticky; top: 0; z-index: 100;
+    }
+    .nav-logo { font-size: 1.5rem; font-weight: 900; letter-spacing: .03em; }
+    .logo-ani {
+      background: linear-gradient(135deg, var(--pink), #E040A0);
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+    .logo-gift { color: var(--gold); }
+    .back-link {
+      font-size: .85rem; font-weight: 600; color: var(--text-sub);
+      transition: color .2s;
+    }
+    .back-link:hover { color: var(--text); }
+
+    /* Main */
+    .container {
+      max-width: 800px;
+      margin: 0 auto;
+      padding: clamp(40px, 8vw, 80px) clamp(20px, 5vw, 40px);
+    }
+    .page-title {
+      font-size: clamp(1.4rem, 3vw, 2rem);
+      font-weight: 900;
+      margin-bottom: 8px;
+    }
+    .page-sub {
+      font-size: .85rem;
+      color: var(--text-muted);
+      margin-bottom: 40px;
+    }
+
+    /* Table */
+    .law-table {
+      width: 100%;
+      border-collapse: collapse;
+    }
+    .law-table tr {
+      border-bottom: 1px solid var(--border);
+    }
+    .law-table th,
+    .law-table td {
+      padding: 18px 16px;
+      text-align: left;
+      vertical-align: top;
+      font-size: .9rem;
+      line-height: 1.8;
+    }
+    .law-table th {
+      width: 180px;
+      min-width: 140px;
+      font-weight: 700;
+      color: var(--text);
+      background: rgba(255,255,255,.02);
+      white-space: nowrap;
+    }
+    .law-table td {
+      color: var(--text-sub);
+    }
+    .law-table a {
+      color: var(--pink);
+      text-decoration: underline;
+      text-underline-offset: 3px;
+    }
+    .law-table a:hover {
+      color: var(--gold);
+    }
+
+    @media (max-width: 600px) {
+      .law-table, .law-table tbody, .law-table tr, .law-table th, .law-table td {
+        display: block;
+        width: 100%;
+      }
+      .law-table th {
+        padding-bottom: 4px;
+        background: none;
+        font-size: .8rem;
+        color: var(--pink);
+        letter-spacing: .08em;
+      }
+      .law-table td {
+        padding-top: 0;
+        padding-bottom: 20px;
+      }
+    }
+
+    /* Footer */
+    .footer {
+      text-align: center;
+      padding: 24px 20px;
+      border-top: 1px solid var(--border);
+      font-size: .78rem;
+      color: var(--text-muted);
+      margin-top: 60px;
+    }
+  </style>
+</head>
+<body>
+  <nav class="nav">
+    <a href="/" class="nav-logo"><span class="logo-ani">ANI</span><span class="logo-gift">GIFT</span></a>
+    <a href="/" class="back-link">← トップに戻る</a>
+  </nav>
+
+  <main class="container">
+    <h1 class="page-title">特定商取引法に基づく表記</h1>
+    <p class="page-sub">Act on Specified Commercial Transactions</p>
+
+    <table class="law-table">
+      <tbody>
+        <tr>
+          <th>販売事業者名</th>
+          <td>NEOPIXCEL</td>
+        </tr>
+        <tr>
+          <th>運営責任者</th>
+          <td>※お問い合わせいただいた方に個別にお知らせいたします</td>
+        </tr>
+        <tr>
+          <th>所在地</th>
+          <td>※お問い合わせいただいた方に個別にお知らせいたします</td>
+        </tr>
+        <tr>
+          <th>電話番号</th>
+          <td>※お問い合わせいただいた方に個別にお知らせいたします</td>
+        </tr>
+        <tr>
+          <th>メールアドレス</th>
+          <td>※お問い合わせいただいた方に個別にお知らせいたします</td>
+        </tr>
+        <tr>
+          <th>お問い合わせ</th>
+          <td><a href="https://lin.ee/GBniYa7" target="_blank">LINE公式アカウント</a>よりお問い合わせください</td>
+        </tr>
+        <tr>
+          <th>販売URL</th>
+          <td><a href="/">https://anigift.jp</a>（予定）</td>
+        </tr>
+        <tr>
+          <th>販売価格</th>
+          <td>
+            1本プラン：¥5,000（税込）<br />
+            3本セット：¥13,500（税込）<br />
+            5本スタンダード：¥20,000（税込）<br />
+            10本プレミアム：¥35,000（税込）
+          </td>
+        </tr>
+        <tr>
+          <th>商品代金以外の必要料金</th>
+          <td>なし</td>
+        </tr>
+        <tr>
+          <th>お支払い方法</th>
+          <td>クレジットカード（Visa / Mastercard / JCB / AMEX）、Apple Pay、Google Pay<br />※Stripe決済を使用</td>
+        </tr>
+        <tr>
+          <th>お支払い時期</th>
+          <td>ご注文確定時にお支払い</td>
+        </tr>
+        <tr>
+          <th>商品の引渡し時期</th>
+          <td>ヒアリング完了後、3〜5営業日を目安に納品いたします。本数やご要望に応じて前後する場合があります。</td>
+        </tr>
+        <tr>
+          <th>返品・キャンセル</th>
+          <td>デジタルコンテンツの性質上、制作開始後のキャンセル・返金はお受けできません。制作開始前のキャンセルについてはLINEにてご相談ください。</td>
+        </tr>
+        <tr>
+          <th>動作環境</th>
+          <td>MP4 / WebM形式の動画ファイル。OBSなどの配信ソフトで使用可能です。</td>
+        </tr>
+      </tbody>
+    </table>
+  </main>
+
+  <div class="footer">&copy; 2026 ANIGIFT by NEOPIXCEL. All rights reserved.</div>
+</body>
+</html>
