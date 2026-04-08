@@ -198,6 +198,13 @@ document.querySelectorAll('.gallery-play-btn').forEach(btn => {
   });
 });
 
+/* ===== VIDEO DOWNLOAD PROTECTION ===== */
+document.querySelectorAll('.gallery-video').forEach(video => {
+  video.setAttribute('controlsList', 'nodownload');
+  video.addEventListener('contextmenu', e => e.preventDefault());
+  video.addEventListener('dragstart', e => e.preventDefault());
+});
+
 /* ===== STEPS STAGGER ===== */
 gsap.utils.toArray('.step').forEach((step, i) => {
   gsap.from(step, {
