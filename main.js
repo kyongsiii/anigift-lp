@@ -154,7 +154,7 @@ gsap.utils.toArray('.gallery-card').forEach((card, i) => {
 });
 
 /* ===== GALLERY VIDEO LAZY LOAD (WebView compatible) ===== */
-const galleryVideos = document.querySelectorAll('.gallery-video[data-src]');
+const allLazyVideos = document.querySelectorAll('[data-src]');
 
 function hidePlayBtn(video) {
   const btn = video.parentElement.querySelector('.gallery-play-btn');
@@ -185,12 +185,12 @@ const videoObserver = new IntersectionObserver((entries) => {
   });
 }, { rootMargin: '200px' });
 
-galleryVideos.forEach(v => videoObserver.observe(v));
+allLazyVideos.forEach(v => videoObserver.observe(v));
 
 // Play button click handler (works in WebView because it's a user gesture)
 document.querySelectorAll('.gallery-play-btn').forEach(btn => {
   btn.addEventListener('click', () => {
-    const video = btn.parentElement.querySelector('.gallery-video');
+    const video = btn.parentElement.querySelector('video');
     if (video) {
       loadAndPlay(video);
       hidePlayBtn(video);
@@ -199,7 +199,7 @@ document.querySelectorAll('.gallery-play-btn').forEach(btn => {
 });
 
 /* ===== VIDEO DOWNLOAD PROTECTION ===== */
-document.querySelectorAll('.gallery-video').forEach(video => {
+document.querySelectorAll('.gallery-video, .chat-preview-video').forEach(video => {
   video.setAttribute('controlsList', 'nodownload');
   video.addEventListener('contextmenu', e => e.preventDefault());
   video.addEventListener('dragstart', e => e.preventDefault());
