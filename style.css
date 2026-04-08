@@ -283,6 +283,19 @@ img{max-width:100%;display:block}
   position:absolute;inset:0;
   width:100%;height:100%;object-fit:cover;
 }
+.gallery-play-btn{
+  position:absolute;top:50%;left:50%;
+  transform:translate(-50%,-50%);
+  z-index:3;
+  width:64px;height:64px;
+  background:none;border:none;
+  cursor:pointer;
+  opacity:.9;
+  transition:opacity .3s, transform .3s var(--ease);
+}
+.gallery-play-btn:hover{opacity:1;transform:translate(-50%,-50%) scale(1.1)}
+.gallery-play-btn svg{width:100%;height:100%;filter:drop-shadow(0 2px 8px rgba(0,0,0,.5))}
+.gallery-play-btn.hidden{opacity:0;pointer-events:none;transform:translate(-50%,-50%) scale(.6)}
 .gallery-gift-badge{
   position:absolute;bottom:12px;right:12px;
   display:flex;align-items:center;gap:8px;
