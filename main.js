@@ -153,6 +153,24 @@ gsap.utils.toArray('.gallery-card').forEach((card, i) => {
   });
 });
 
+/* ===== GALLERY VIDEO LAZY LOAD ===== */
+const videoObserver = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      const video = entry.target;
+      const src = video.dataset.src;
+      if (src) {
+        video.src = src;
+        video.load();
+        video.play().catch(() => {});
+      }
+      videoObserver.unobserve(video);
+    }
+  });
+}, { rootMargin: '200px' });
+
+document.querySelectorAll('.gallery-video[data-src]').forEach(v => videoObserver.observe(v));
+
 /* ===== STEPS STAGGER ===== */
 gsap.utils.toArray('.step').forEach((step, i) => {
   gsap.from(step, {
