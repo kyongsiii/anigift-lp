@@ -153,23 +153,55 @@ gsap.utils.toArray('.gallery-card').forEach((card, i) => {
   });
 });
 
-/* ===== GALLERY VIDEO LAZY LOAD ===== */
+/* ===== GALLERY VIDEO LAZY LOAD (WebView compatible) ===== */
+const galleryVideos = document.querySelectorAll('.gallery-video[data-src]');
+
+function tryPlayVideo(video) {
+  if (video.paused && video.readyState >= 2) {
+    video.play().catch(() => {});
+  }
+}
+
+function tryPlayAll() {
+  document.querySelectorAll('.gallery-video').forEach(tryPlayVideo);
+}
+
+// Lazy load via IntersectionObserver
 const videoObserver = new IntersectionObserver((entries) => {
   entries.forEach(entry => {
     if (entry.isIntersecting) {
       const video = entry.target;
       const src = video.dataset.src;
-      if (src) {
+      if (src && !video.src.includes(src)) {
         video.src = src;
         video.load();
         video.play().catch(() => {});
+        // Retry play when video has loaded enough data
+        video.addEventListener('canplay', () => tryPlayVideo(video), { once: true });
       }
       videoObserver.unobserve(video);
     }
   });
 }, { rootMargin: '200px' });
 
-document.querySelectorAll('.gallery-video[data-src]').forEach(v => videoObserver.observe(v));
+galleryVideos.forEach(v => videoObserver.observe(v));
+
+// WebView fix: force play on first user interaction
+const userEvents = ['touchstart', 'click', 'scroll'];
+function onFirstInteraction() {
+  tryPlayAll();
+  userEvents.forEach(e => document.removeEventListener(e, onFirstInteraction));
+}
+userEvents.forEach(e => document.addEventListener(e, onFirstInteraction, { passive: true }));
+
+// Also retry on scroll (WebView may unlock playback after scrolling)
+let scrollPlayRetries = 0;
+window.addEventListener('scroll', () => {
+  if (scrollPlayRetries < 10) {
+    tryPlayAll();
+    scrollPlayRetries++;
+  }
+}, { passive: true });
 
 /* ===== STEPS STAGGER ===== */
 gsap.utils.toArray('.step').forEach((step, i) => {
