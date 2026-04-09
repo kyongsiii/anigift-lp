@@ -1,0 +1,598 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ANIGIFT Gift Banner Generator</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;900&family=Noto+Sans+JP:wght@400;700;900&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --bg: #0a0a12;
+    --bg-card: #111119;
+    --pink: #FF2D78;
+    --gold: #FFB800;
+    --purple: #8B5CF6;
+    --text: #f0eef6;
+    --text-sub: #9a96a8;
+    --border: rgba(255,255,255,.06);
+  }
+
+  body {
+    font-family: 'Inter', 'Noto Sans JP', sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 40px 20px;
+  }
+
+  h1 {
+    font-size: 1.8rem;
+    font-weight: 900;
+    margin-bottom: 8px;
+    background: linear-gradient(135deg, var(--pink), var(--gold));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+
+  .subtitle {
+    color: var(--text-sub);
+    font-size: .9rem;
+    margin-bottom: 40px;
+  }
+
+  .tool-container {
+    width: 100%;
+    max-width: 720px;
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+  }
+
+  .card {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 24px;
+  }
+
+  .card-title {
+    font-size: .75rem;
+    font-weight: 700;
+    letter-spacing: .15em;
+    text-transform: uppercase;
+    color: var(--pink);
+    margin-bottom: 16px;
+  }
+
+  /* Drop Zone */
+  .drop-zone {
+    border: 2px dashed rgba(255,255,255,.12);
+    border-radius: 12px;
+    padding: 40px 20px;
+    text-align: center;
+    cursor: pointer;
+    transition: border-color .3s, background .3s;
+    position: relative;
+  }
+  .drop-zone:hover, .drop-zone.dragover {
+    border-color: var(--pink);
+    background: rgba(255,45,120,.04);
+  }
+  .drop-zone input[type="file"] {
+    position: absolute;
+    inset: 0;
+    opacity: 0;
+    cursor: pointer;
+  }
+  .drop-zone-icon {
+    font-size: 2.5rem;
+    margin-bottom: 8px;
+  }
+  .drop-zone-text {
+    color: var(--text-sub);
+    font-size: .85rem;
+  }
+  .drop-zone-text strong {
+    color: var(--pink);
+  }
+
+  .preview-thumb {
+    width: 80px;
+    height: 80px;
+    object-fit: contain;
+    border-radius: 12px;
+    border: 2px solid var(--border);
+    margin-top: 12px;
+    display: none;
+  }
+
+  /* Inputs */
+  .input-group {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+  .input-row {
+    display: flex;
+    gap: 12px;
+  }
+  .input-row > * { flex: 1; }
+
+  label {
+    font-size: .78rem;
+    font-weight: 600;
+    color: var(--text-sub);
+    margin-bottom: 4px;
+    display: block;
+  }
+
+  input[type="text"] {
+    width: 100%;
+    padding: 12px 16px;
+    background: rgba(255,255,255,.04);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    color: var(--text);
+    font-size: .95rem;
+    font-family: inherit;
+    outline: none;
+    transition: border-color .3s;
+  }
+  input[type="text"]:focus {
+    border-color: var(--pink);
+  }
+  input[type="text"]::placeholder {
+    color: rgba(255,255,255,.2);
+  }
+
+  /* Buttons */
+  .btn-row {
+    display: flex;
+    gap: 12px;
+  }
+
+  .btn {
+    flex: 1;
+    padding: 14px 24px;
+    border: none;
+    border-radius: 12px;
+    font-size: .9rem;
+    font-weight: 700;
+    font-family: inherit;
+    cursor: pointer;
+    transition: transform .2s, box-shadow .2s;
+  }
+  .btn:hover { transform: translateY(-2px); }
+  .btn:active { transform: translateY(0); }
+
+  .btn-primary {
+    background: linear-gradient(135deg, var(--pink), var(--purple));
+    color: #fff;
+    box-shadow: 0 4px 20px rgba(255,45,120,.3);
+  }
+  .btn-primary:hover {
+    box-shadow: 0 6px 30px rgba(255,45,120,.5);
+  }
+  .btn-primary:disabled {
+    opacity: .4;
+    cursor: not-allowed;
+    transform: none;
+  }
+
+  .btn-secondary {
+    background: rgba(255,255,255,.06);
+    color: var(--text);
+    border: 1px solid var(--border);
+  }
+
+  /* Preview */
+  .preview-section {
+    text-align: center;
+  }
+
+  .preview-canvas-wrap {
+    display: inline-block;
+    border-radius: 12px;
+    overflow: hidden;
+    border: 1px solid var(--border);
+    box-shadow: 0 8px 40px rgba(0,0,0,.4);
+    margin-top: 12px;
+  }
+
+  #previewCanvas {
+    display: block;
+    max-width: 100%;
+    height: auto;
+  }
+
+  .empty-preview {
+    padding: 60px 20px;
+    color: var(--text-sub);
+    font-size: .85rem;
+    border: 1px dashed var(--border);
+    border-radius: 12px;
+    margin-top: 12px;
+  }
+
+  /* Style Selector */
+  .style-options {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+  }
+  .style-btn {
+    padding: 8px 16px;
+    border-radius: 8px;
+    border: 1px solid var(--border);
+    background: rgba(255,255,255,.03);
+    color: var(--text-sub);
+    font-size: .8rem;
+    font-weight: 600;
+    font-family: inherit;
+    cursor: pointer;
+    transition: all .2s;
+  }
+  .style-btn.active {
+    border-color: var(--pink);
+    color: var(--pink);
+    background: rgba(255,45,120,.08);
+  }
+  .style-btn:hover:not(.active) {
+    border-color: rgba(255,255,255,.15);
+    color: var(--text);
+  }
+
+  /* Slider */
+  .slider-row {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    margin-top: 8px;
+  }
+  .slider-row input[type="range"] {
+    flex: 1;
+    -webkit-appearance: none;
+    height: 6px;
+    border-radius: 3px;
+    background: rgba(255,255,255,.08);
+    outline: none;
+  }
+  .slider-row input[type="range"]::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    width: 18px; height: 18px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, var(--pink), var(--gold));
+    cursor: pointer;
+    border: 2px solid var(--bg);
+  }
+  .slider-value {
+    font-size: .85rem;
+    font-weight: 700;
+    color: var(--text);
+    min-width: 42px;
+    text-align: right;
+  }
+
+  @media (max-width: 500px) {
+    .input-row { flex-direction: column; }
+    h1 { font-size: 1.4rem; }
+  }
+</style>
+</head>
+<body>
+
+<h1>Gift Banner Generator</h1>
+<p class="subtitle">TikTokリール用ギフトバナーを作成</p>
+
+<div class="tool-container">
+
+  <!-- Image Upload -->
+  <div class="card">
+    <div class="card-title">① ギフト画像</div>
+    <div class="drop-zone" id="dropZone">
+      <input type="file" id="fileInput" accept="image/*">
+      <div class="drop-zone-icon">🎁</div>
+      <div class="drop-zone-text">
+        クリックまたはドラッグ&ドロップで<br>
+        <strong>ギフト画像をアップロード</strong>
+      </div>
+      <img class="preview-thumb" id="previewThumb" alt="preview">
+    </div>
+  </div>
+
+  <!-- Text Input -->
+  <div class="card">
+    <div class="card-title">② ギフト名</div>
+    <div class="input-group">
+      <div class="input-row">
+        <div>
+          <label>日本語名</label>
+          <input type="text" id="nameJa" placeholder="クジラのダイビング">
+        </div>
+        <div>
+          <label>英語名（任意）</label>
+          <input type="text" id="nameEn" placeholder="Whale Diving">
+        </div>
+      </div>
+    </div>
+    <div style="margin-top:16px">
+      <label>日本語 文字サイズ</label>
+      <div class="slider-row">
+        <input type="range" id="sizeJa" min="24" max="80" value="52">
+        <span class="slider-value" id="sizeJaVal">52px</span>
+      </div>
+    </div>
+    <div style="margin-top:12px">
+      <label>英語 文字サイズ</label>
+      <div class="slider-row">
+        <input type="range" id="sizeEn" min="24" max="80" value="24">
+        <span class="slider-value" id="sizeEnVal">24px</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Style -->
+  <div class="card">
+    <div class="card-title">③ スタイル</div>
+    <div class="style-options">
+      <button class="style-btn active" data-style="dark">ダーク</button>
+      <button class="style-btn" data-style="glow">グロー</button>
+      <button class="style-btn" data-style="minimal">ミニマル</button>
+    </div>
+  </div>
+
+  <!-- Actions -->
+  <div class="btn-row">
+    <button class="btn btn-secondary" id="btnPreview">プレビュー</button>
+    <button class="btn btn-primary" id="btnDownload" disabled>ダウンロード</button>
+  </div>
+
+  <!-- Preview -->
+  <div class="card preview-section">
+    <div class="card-title">プレビュー</div>
+    <div id="previewArea">
+      <div class="empty-preview">ギフト画像とギフト名を入力してプレビューしてください</div>
+    </div>
+  </div>
+
+</div>
+
+<script>
+const W = 1200, H = 400;
+let uploadedImage = null;
+let currentStyle = 'dark';
+
+// File upload
+const dropZone = document.getElementById('dropZone');
+const fileInput = document.getElementById('fileInput');
+const previewThumb = document.getElementById('previewThumb');
+
+function handleFile(file) {
+  if (!file || !file.type.startsWith('image/')) return;
+  const reader = new FileReader();
+  reader.onload = (e) => {
+    const img = new Image();
+    img.onload = () => {
+      uploadedImage = img;
+      previewThumb.src = e.target.result;
+      previewThumb.style.display = 'inline-block';
+      dropZone.querySelector('.drop-zone-icon').textContent = '✅';
+      dropZone.querySelector('.drop-zone-text').innerHTML = '<strong>画像がアップロードされました</strong>';
+    };
+    img.src = e.target.result;
+  };
+  reader.readAsDataURL(file);
+}
+
+fileInput.addEventListener('change', (e) => handleFile(e.target.files[0]));
+
+dropZone.addEventListener('dragover', (e) => {
+  e.preventDefault();
+  dropZone.classList.add('dragover');
+});
+dropZone.addEventListener('dragleave', () => dropZone.classList.remove('dragover'));
+dropZone.addEventListener('drop', (e) => {
+  e.preventDefault();
+  dropZone.classList.remove('dragover');
+  handleFile(e.dataTransfer.files[0]);
+});
+
+// Style buttons
+document.querySelectorAll('.style-btn').forEach(btn => {
+  btn.addEventListener('click', () => {
+    document.querySelectorAll('.style-btn').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    currentStyle = btn.dataset.style;
+  });
+});
+
+// Font size sliders
+document.getElementById('sizeJa').addEventListener('input', (e) => {
+  document.getElementById('sizeJaVal').textContent = e.target.value + 'px';
+});
+document.getElementById('sizeEn').addEventListener('input', (e) => {
+  document.getElementById('sizeEnVal').textContent = e.target.value + 'px';
+});
+
+// Draw banner
+function drawBanner(canvas) {
+  const ctx = canvas.getContext('2d');
+  canvas.width = W;
+  canvas.height = H;
+
+  const styles = {
+    dark: {
+      bg: '#0a0a12',
+      glowColor1: 'rgba(255,45,120,.15)',
+      glowColor2: 'rgba(255,184,0,.1)',
+      textColor: '#f0eef6',
+      subColor: '#9a96a8',
+      borderColor: 'rgba(255,255,255,.08)',
+      accentGrad: ['#FF2D78', '#FFB800'],
+    },
+    glow: {
+      bg: '#0a0a12',
+      glowColor1: 'rgba(255,45,120,.3)',
+      glowColor2: 'rgba(139,92,246,.2)',
+      textColor: '#ffffff',
+      subColor: '#c8b8e8',
+      borderColor: 'rgba(255,45,120,.15)',
+      accentGrad: ['#FF2D78', '#8B5CF6'],
+    },
+    minimal: {
+      bg: '#111119',
+      glowColor1: 'rgba(255,255,255,.03)',
+      glowColor2: 'rgba(255,255,255,.02)',
+      textColor: '#f0eef6',
+      subColor: '#6b6880',
+      borderColor: 'rgba(255,255,255,.06)',
+      accentGrad: ['#f0eef6', '#9a96a8'],
+    },
+  };
+
+  const s = styles[currentStyle];
+
+  // Background
+  ctx.fillStyle = s.bg;
+  ctx.fillRect(0, 0, W, H);
+
+  // Glow orbs
+  const g1 = ctx.createRadialGradient(100, H / 2, 0, 100, H / 2, 250);
+  g1.addColorStop(0, s.glowColor1);
+  g1.addColorStop(1, 'transparent');
+  ctx.fillStyle = g1;
+  ctx.fillRect(0, 0, W, H);
+
+  const g2 = ctx.createRadialGradient(W - 200, H / 2, 0, W - 200, H / 2, 300);
+  g2.addColorStop(0, s.glowColor2);
+  g2.addColorStop(1, 'transparent');
+  ctx.fillStyle = g2;
+  ctx.fillRect(0, 0, W, H);
+
+  // Border (rounded rect simulation)
+  ctx.strokeStyle = s.borderColor;
+  ctx.lineWidth = 2;
+  ctx.beginPath();
+  ctx.roundRect(1, 1, W - 2, H - 2, 20);
+  ctx.stroke();
+
+  // Gift image
+  if (uploadedImage) {
+    const imgSize = 220;
+    const imgX = 80;
+    const imgY = (H - imgSize) / 2;
+
+    // Subtle circle glow behind image
+    const imgGlow = ctx.createRadialGradient(
+      imgX + imgSize / 2, imgY + imgSize / 2, imgSize * 0.3,
+      imgX + imgSize / 2, imgY + imgSize / 2, imgSize * 0.7
+    );
+    imgGlow.addColorStop(0, s.glowColor1);
+    imgGlow.addColorStop(1, 'transparent');
+    ctx.fillStyle = imgGlow;
+    ctx.fillRect(imgX - 40, imgY - 40, imgSize + 80, imgSize + 80);
+
+    // Draw image maintaining aspect ratio
+    const ratio = Math.min(imgSize / uploadedImage.width, imgSize / uploadedImage.height);
+    const drawW = uploadedImage.width * ratio;
+    const drawH = uploadedImage.height * ratio;
+    const drawX = imgX + (imgSize - drawW) / 2;
+    const drawY = imgY + (imgSize - drawH) / 2;
+
+    ctx.drawImage(uploadedImage, drawX, drawY, drawW, drawH);
+  }
+
+  // Text
+  const nameJa = document.getElementById('nameJa').value.trim();
+  const nameEn = document.getElementById('nameEn').value.trim();
+  const textX = uploadedImage ? 380 : 80;
+
+  // Japanese name
+  if (nameJa) {
+    const fontSizeJa = parseInt(document.getElementById('sizeJa').value);
+    ctx.fillStyle = s.textColor;
+    ctx.font = `900 ${fontSizeJa}px "Noto Sans JP", sans-serif`;
+    ctx.textBaseline = 'middle';
+
+    const textY = nameEn ? H / 2 - 20 : H / 2;
+    ctx.fillText(nameJa, textX, textY);
+
+    // Accent underline
+    const metrics = ctx.measureText(nameJa);
+    const grad = ctx.createLinearGradient(textX, 0, textX + metrics.width, 0);
+    grad.addColorStop(0, s.accentGrad[0]);
+    grad.addColorStop(1, s.accentGrad[1]);
+    ctx.fillStyle = grad;
+    ctx.fillRect(textX, textY + fontSizeJa * 0.65, metrics.width, 3);
+  }
+
+  // English name
+  if (nameEn) {
+    const fontSizeEn = parseInt(document.getElementById('sizeEn').value);
+    ctx.fillStyle = s.textColor;
+    ctx.font = `900 ${fontSizeEn}px "Inter", sans-serif`;
+    ctx.textBaseline = 'middle';
+    ctx.fillText(nameEn, textX, H / 2 + 36);
+
+    // Accent underline for English
+    const metricsEn = ctx.measureText(nameEn);
+    const gradEn = ctx.createLinearGradient(textX, 0, textX + metricsEn.width, 0);
+    gradEn.addColorStop(0, s.accentGrad[0]);
+    gradEn.addColorStop(1, s.accentGrad[1]);
+    ctx.fillStyle = gradEn;
+    ctx.fillRect(textX, H / 2 + 36 + fontSizeEn * 0.65, metricsEn.width, 3);
+  }
+
+  // ANIGIFT watermark
+  ctx.fillStyle = 'rgba(255,255,255,.08)';
+  ctx.font = '600 14px "Inter", sans-serif';
+  ctx.textAlign = 'right';
+  ctx.textBaseline = 'bottom';
+  ctx.fillText('ANIGIFT', W - 24, H - 16);
+  ctx.textAlign = 'left';
+}
+
+// Preview
+const btnPreview = document.getElementById('btnPreview');
+const btnDownload = document.getElementById('btnDownload');
+const previewArea = document.getElementById('previewArea');
+
+btnPreview.addEventListener('click', () => {
+  const nameJa = document.getElementById('nameJa').value.trim();
+  if (!uploadedImage && !nameJa) {
+    alert('ギフト画像またはギフト名を入力してください');
+    return;
+  }
+
+  const canvas = document.createElement('canvas');
+  drawBanner(canvas);
+
+  previewArea.innerHTML = '';
+  const wrap = document.createElement('div');
+  wrap.className = 'preview-canvas-wrap';
+  canvas.id = 'previewCanvas';
+  wrap.appendChild(canvas);
+  previewArea.appendChild(wrap);
+
+  btnDownload.disabled = false;
+});
+
+// Download
+btnDownload.addEventListener('click', () => {
+  const canvas = document.createElement('canvas');
+  drawBanner(canvas);
+
+  const nameJa = document.getElementById('nameJa').value.trim() || 'gift';
+  const link = document.createElement('a');
+  link.download = `ANIGIFT_${nameJa}.png`;
+  link.href = canvas.toDataURL('image/png');
+  link.click();
+});
+</script>
+</body>
+</html>
