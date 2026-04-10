@@ -521,6 +521,8 @@ img{max-width:100%;display:block}
 }
 .feature-bonus{color:var(--gold)!important}
 .feature-bonus::before{color:var(--gold)!important}
+.feature-note{color:var(--text-muted)!important;opacity:.6}
+.feature-note::before{content:'✕' !important;color:var(--text-muted)!important;opacity:.6}
 .pricing-btn{
   display:block;text-align:center;
   padding:14px 0;font-size:.95rem;font-weight:700;
