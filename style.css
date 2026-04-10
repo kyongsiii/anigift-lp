@@ -763,3 +763,89 @@ footer{background:var(--bg-deep);color:var(--text-sub);padding:56px 0 0;border-t
   .chat-bubble{font-size:.82rem;padding:10px 14px}
   .chat-video-preview{width:200px}
 }
+
+/* ===== NEOPIXCEL BANNER ===== */
+#neopixcel-banner{
+  position:relative;
+  padding:20px 0 40px;
+}
+.np-banner{
+  position:relative;
+  max-width:720px;
+  margin:0 auto;
+  padding:40px 36px;
+  border-radius:20px;
+  background:linear-gradient(135deg,rgba(139,92,246,.08),rgba(255,45,120,.06));
+  border:1px solid rgba(139,92,246,.2);
+  text-align:center;
+  overflow:hidden;
+}
+.np-banner::before{
+  content:'';
+  position:absolute;inset:-1px;
+  border-radius:20px;
+  padding:1px;
+  background:linear-gradient(135deg,var(--purple),var(--pink),var(--gold));
+  -webkit-mask:linear-gradient(#fff 0 0) content-box,linear-gradient(#fff 0 0);
+  -webkit-mask-composite:xor;
+  mask-composite:exclude;
+  pointer-events:none;
+}
+.np-banner-badge{
+  display:inline-block;
+  padding:4px 16px;
+  border-radius:20px;
+  font-size:.7rem;font-weight:800;letter-spacing:.15em;
+  background:linear-gradient(135deg,var(--purple),var(--pink));
+  color:#fff;
+  margin-bottom:20px;
+}
+.np-banner-logo{
+  font-size:1.6rem;font-weight:900;
+  letter-spacing:.1em;
+  background:linear-gradient(135deg,var(--purple),var(--pink),var(--gold));
+  -webkit-background-clip:text;
+  -webkit-text-fill-color:transparent;
+  margin-bottom:4px;
+}
+.np-banner-sub{
+  font-size:.78rem;
+  color:var(--text-muted);
+  margin-bottom:20px;
+}
+.np-banner-headline{
+  font-size:1.4rem;font-weight:800;
+  line-height:1.6;
+  color:var(--text);
+  margin-bottom:16px;
+}
+.np-banner-value{
+  font-size:.9rem;
+  color:var(--text-muted);
+  line-height:1.8;
+  margin-bottom:24px;
+}
+.np-banner-value strong{
+  color:var(--gold-light);
+}
+.np-banner-btn{
+  display:inline-block;
+  padding:14px 32px;
+  border-radius:12px;
+  font-size:.9rem;font-weight:700;
+  color:#fff;
+  background:linear-gradient(135deg,var(--purple),var(--pink));
+  text-decoration:none;
+  transition:transform .2s,box-shadow .2s;
+  box-shadow:0 4px 20px rgba(139,92,246,.3);
+}
+.np-banner-btn:hover{
+  transform:translateY(-2px);
+  box-shadow:0 6px 30px rgba(139,92,246,.5);
+}
+
+@media(max-width:768px){
+  .np-banner{padding:32px 24px}
+  .np-banner-logo{font-size:1.3rem}
+  .np-banner-headline{font-size:1.2rem}
+}
