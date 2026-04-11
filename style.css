@@ -265,7 +265,7 @@ img{max-width:100%;display:block}
 
 /* ===== GALLERY ===== */
 #gallery{background:var(--bg-deep);position:relative;overflow:hidden}
-.gallery-grid{display:grid;grid-template-columns:1fr;gap:28px;max-width:700px;margin:0 auto}
+.gallery-grid{display:grid;grid-template-columns:1fr;gap:28px;max-width:900px;margin:0 auto}
 .gallery-card{
   background:var(--bg-card);
   border:1px solid var(--border);border-radius:20px;
@@ -274,7 +274,7 @@ img{max-width:100%;display:block}
 }
 .gallery-card:hover{transform:translateY(-8px);border-color:var(--border-hover);box-shadow:var(--shadow-pink)}
 .gallery-visual{
-  aspect-ratio:9/16;
+  aspect-ratio:16/9;
   background:linear-gradient(180deg,#12101c,#0d0b14);
   position:relative;overflow:hidden;
   border-bottom:1px solid var(--border);
