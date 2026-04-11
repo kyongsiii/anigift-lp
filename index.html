@@ -213,13 +213,39 @@
         <p class="sec-sub">配信スタイルに合わせて、最適なアスペクト比をお選びいただけます。</p>
       </div>
       <div class="ratio-grid">
+        <!-- 16:9 おすすめ -->
         <div class="ratio-card ratio-card--recommended" data-reveal>
           <div class="ratio-badge">★ おすすめ</div>
           <div class="ratio-label">16:9<small>横型</small></div>
-          <div class="ratio-video-wrap ratio-video--landscape">
-            <video autoplay loop muted playsinline>
-              <source src="/videos/heart me.mp4" type="video/mp4" />
-            </video>
+          <div class="tklive-phone">
+            <div class="tklive-screen tklive-screen--landscape">
+              <div class="tklive-bg"></div>
+              <div class="tklive-video tklive-video--landscape">
+                <video autoplay loop muted playsinline>
+                  <source src="/videos/heart me.mp4" type="video/mp4" />
+                </video>
+              </div>
+              <!-- LIVE UI overlay -->
+              <div class="tklive-ui">
+                <div class="tklive-top">
+                  <div class="tklive-live-badge">LIVE</div>
+                  <div class="tklive-viewers">👁 1.2K</div>
+                  <div class="tklive-close">✕</div>
+                </div>
+                <div class="tklive-bottom">
+                  <div class="tklive-chat">
+                    <div class="tklive-msg"><span class="tklive-user">user_123</span> かわいい！！</div>
+                    <div class="tklive-msg"><span class="tklive-user">rina_fan</span> 🌹🌹🌹</div>
+                    <div class="tklive-msg"><span class="tklive-user">mika.live</span> すごい演出✨</div>
+                  </div>
+                  <div class="tklive-actions">
+                    <div class="tklive-gift-btn">🎁</div>
+                    <div class="tklive-gift-btn">💬</div>
+                    <div class="tklive-gift-btn">↗</div>
+                  </div>
+                </div>
+              </div>
+            </div>
           </div>
           <ul class="ratio-pros">
             <li class="ratio-pro">✅ 配信者の顔が見えたまま演出</li>
@@ -227,12 +253,35 @@
             <li class="ratio-pro">✅ OBSで配置しやすい</li>
           </ul>
         </div>
+        <!-- 9:16 -->
         <div class="ratio-card" data-reveal>
           <div class="ratio-label">9:16<small>縦型</small></div>
-          <div class="ratio-video-wrap ratio-video--portrait">
-            <video autoplay loop muted playsinline>
-              <source src="/videos/縦動画.mp4" type="video/mp4" />
-            </video>
+          <div class="tklive-phone">
+            <div class="tklive-screen tklive-screen--portrait">
+              <div class="tklive-video tklive-video--portrait">
+                <video autoplay loop muted playsinline>
+                  <source src="/videos/縦動画.mp4" type="video/mp4" />
+                </video>
+              </div>
+              <!-- LIVE UI overlay -->
+              <div class="tklive-ui">
+                <div class="tklive-top">
+                  <div class="tklive-live-badge">LIVE</div>
+                  <div class="tklive-viewers">👁 856</div>
+                  <div class="tklive-close">✕</div>
+                </div>
+                <div class="tklive-bottom">
+                  <div class="tklive-chat">
+                    <div class="tklive-msg"><span class="tklive-user">fan_01</span> すごい！🎉</div>
+                    <div class="tklive-msg"><span class="tklive-user">yuki_</span> 画面全部✨</div>
+                  </div>
+                  <div class="tklive-actions">
+                    <div class="tklive-gift-btn">🎁</div>
+                    <div class="tklive-gift-btn">💬</div>
+                  </div>
+                </div>
+              </div>
+            </div>
           </div>
           <ul class="ratio-pros">
             <li class="ratio-pro">✅ 画面いっぱいの迫力演出</li>
