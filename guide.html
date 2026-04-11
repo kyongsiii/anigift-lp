@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Tikfinity セットアップガイド | ANIGIFT</title>
+  <meta name="description" content="ANIGIFTで制作したギフトアニメーションをTikTok LIVEで流す方法。Tikfinityのセットアップ手順を画像付きで解説します。" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;900&family=Noto+Sans+JP:wght@400;500;700;900&display=swap" rel="stylesheet" />
+  <style>
+    *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+    :root{
+      --bg:#0b0a10;
+      --bg-card:#141420;
+      --border:rgba(255,255,255,.06);
+      --text:#e8e6f0;
+      --text-muted:#8a879e;
+      --pink:#ff2d78;
+      --purple:#a855f7;
+      --gold:#ffb800;
+      --accent:linear-gradient(135deg,#ff2d78,#a855f7);
+    }
+    html{scroll-behavior:smooth}
+    body{
+      font-family:'Noto Sans JP','Inter',sans-serif;
+      background:var(--bg);color:var(--text);
+      line-height:1.8;
+      -webkit-font-smoothing:antialiased;
+    }
+    a{color:var(--pink);text-decoration:none}
+    a:hover{text-decoration:underline}
+
+    /* Header */
+    .guide-header{
+      text-align:center;
+      padding:80px 24px 40px;
+      border-bottom:1px solid var(--border);
+    }
+    .guide-header .back-link{
+      display:inline-block;
+      margin-bottom:24px;
+      font-size:.85rem;
+      color:var(--text-muted);
+    }
+    .guide-header .back-link:hover{color:var(--pink)}
+    .guide-header h1{
+      font-size:2rem;font-weight:900;
+      line-height:1.3;
+      margin-bottom:12px;
+    }
+    .guide-header h1 span{
+      background:var(--accent);
+      -webkit-background-clip:text;
+      -webkit-text-fill-color:transparent;
+    }
+    .guide-header p{
+      color:var(--text-muted);
+      font-size:.92rem;
+      max-width:560px;margin:0 auto;
+    }
+
+    /* Container */
+    .guide-container{
+      max-width:800px;
+      margin:0 auto;
+      padding:48px 24px 80px;
+    }
+
+    /* Step */
+    .step{
+      margin-bottom:48px;
+      padding-bottom:48px;
+      border-bottom:1px solid var(--border);
+    }
+    .step:last-child{border-bottom:none}
+    .step-number{
+      display:inline-flex;
+      align-items:center;justify-content:center;
+      width:36px;height:36px;
+      border-radius:50%;
+      background:var(--accent);
+      color:#fff;
+      font-size:.85rem;font-weight:900;
+      margin-bottom:12px;
+    }
+    .step h2{
+      font-size:1.15rem;font-weight:800;
+      line-height:1.5;
+      margin-bottom:16px;
+    }
+    .step-desc{
+      color:var(--text-muted);
+      font-size:.88rem;
+      margin-bottom:16px;
+    }
+    .step-img{
+      width:100%;
+      border-radius:12px;
+      border:1px solid var(--border);
+      box-shadow:0 4px 24px rgba(0,0,0,.4);
+    }
+    .step-note{
+      margin-top:12px;
+      padding:12px 16px;
+      background:rgba(255,184,0,.06);
+      border:1px solid rgba(255,184,0,.15);
+      border-radius:10px;
+      font-size:.82rem;
+      color:var(--gold);
+    }
+
+    /* Footer */
+    .guide-footer{
+      text-align:center;
+      padding:40px 24px;
+      border-top:1px solid var(--border);
+    }
+    .guide-footer p{
+      color:var(--text-muted);
+      font-size:.82rem;
+    }
+    .guide-cta{
+      display:inline-block;
+      margin-top:20px;
+      padding:14px 32px;
+      border-radius:12px;
+      background:var(--accent);
+      color:#fff;
+      font-weight:700;
+      font-size:.95rem;
+      transition:transform .2s,box-shadow .2s;
+    }
+    .guide-cta:hover{
+      transform:translateY(-2px);
+      box-shadow:0 8px 24px rgba(255,45,120,.3);
+      text-decoration:none;
+    }
+
+    @media(max-width:600px){
+      .guide-header h1{font-size:1.5rem}
+      .step h2{font-size:1rem}
+    }
+  </style>
+</head>
+<body>
+
+  <header class="guide-header">
+    <a href="/" class="back-link">← ANIGIFTトップに戻る</a>
+    <h1>Tikfinity<br><span>セットアップガイド</span></h1>
+    <p>ANIGIFTで制作したギフトアニメーションを、TikTok LIVEの配信画面に表示する方法を解説します。</p>
+  </header>
+
+  <div class="guide-container">
+
+    <!-- STEP 1 -->
+    <div class="step">
+      <div class="step-number">1</div>
+      <h2>Tikfinityのアクションメニューから「新しいアクション」を選択</h2>
+      <p class="step-desc">Tikfinityにログインし、サービス内のアクションメニューを開きます。「新しいアクション」をクリックして、ギフトアニメーション用のアクションを作成します。</p>
+      <img class="step-img" src="/guide/１Tikfinityサービス内アクションメニューの新しいアクションを選択.jpg" alt="Step 1: 新しいアクションを選択" loading="lazy" />
+    </div>
+
+    <!-- STEP 2 -->
+    <div class="step">
+      <div class="step-number">2</div>
+      <h2>管理用の名前と流す動画を選択</h2>
+      <p class="step-desc">アクションにわかりやすい名前をつけ、ANIGIFTから納品された動画ファイル（MP4）を選択します。</p>
+      <img class="step-img" src="/guide/２管理用の名前と流す動画を選択.jpg" alt="Step 2: 名前と動画を設定" loading="lazy" />
+    </div>
+
+    <!-- STEP 3 -->
+    <div class="step">
+      <div class="step-number">3</div>
+      <h2>表示時間とオプションを設定</h2>
+      <p class="step-desc">表示時間は動画の秒数に合わせて設定します。フェードイン・フェードアウトはお好みで。「ギフトコンボを繰り返す」にチェックを入れておくと、連続ギフト時にも対応できます。</p>
+      <img class="step-img" src="/guide/３表示時間は動画秒数に合わせ、フェードイン・アウトはお好み。ギフトコンボを繰り返すにチェック.jpg" alt="Step 3: 表示時間の設定" loading="lazy" />
+      <div class="step-note">💡 表示時間は動画の長さと同じ秒数に設定するのがおすすめです。</div>
+    </div>
+
+    <!-- STEP 4 -->
+    <div class="step">
+      <div class="step-number">4</div>
+      <h2>アクションを確認し、新しいイベントを作成</h2>
+      <p class="step-desc">アクションが追加されていることを確認したら、その下にある「新しいイベントを作成」をクリックします。</p>
+      <img class="step-img" src="/guide/４アクションが追加されてるのを確認したら、その下の新しいイベントを作製をクリック.jpg" alt="Step 4: 新しいイベントを作成" loading="lazy" />
+    </div>
+
+    <!-- STEP 5 -->
+    <div class="step">
+      <div class="step-number">5</div>
+      <h2>トリガー条件を設定</h2>
+      <p class="step-desc">条件に合わせて対象のリスナーを選び、「特定のギフトを送る」からトリガーとなるギフトを選択します。例：ハートミーが来たらアニメーションを表示、など。</p>
+      <img class="step-img" src="/guide/５条件に合わせて対象のリスナーを選び、特定のギフトを送るからトリガーとなるギフトを選択.jpg" alt="Step 5: トリガー条件を設定" loading="lazy" />
+    </div>
+
+    <!-- STEP 6 -->
+    <div class="step">
+      <div class="step-number">6</div>
+      <h2>アクションを紐づけて保存</h2>
+      <p class="step-desc">先ほど設定したアクション（動画表示）をイベントに紐づけて、保存します。これでTikfinity側の設定は完了です。</p>
+      <img class="step-img" src="/guide/６そして先ほど設定したアクションを紐づけ保存.jpg" alt="Step 6: アクションを紐づけ保存" loading="lazy" />
+    </div>
+
+    <!-- STEP 7 -->
+    <div class="step">
+      <div class="step-number">7</div>
+      <h2>TikTok LIVE Studioでソースを追加</h2>
+      <p class="step-desc">TikTok LIVE Studioを開き、「ソースを追加」を選択します。</p>
+      <img class="step-img" src="/guide/７TiktokLIVEstudioのソースを追加を選択。.jpg" alt="Step 7: ソースを追加" loading="lazy" />
+    </div>
+
+    <!-- STEP 8 -->
+    <div class="step">
+      <div class="step-number">8</div>
+      <h2>「リンク」を選択</h2>
+      <p class="step-desc">ソースの種類から「リンク」を選択します。ここにTikfinityのURLを入力します。</p>
+      <img class="step-img" src="/guide/８リンクを選択.jpg" alt="Step 8: リンクを選択" loading="lazy" />
+    </div>
+
+    <!-- STEP 9 -->
+    <div class="step">
+      <div class="step-number">9</div>
+      <h2>TikfinityのScreen URLをコピーして貼り付け</h2>
+      <p class="step-desc">先ほどのアクションはscreen1に設定されている為、そのURLをTikfinityからコピーして、LIVE Studioに貼り付けます。</p>
+      <img class="step-img" src="/guide/９先ほどのアクションはscreen1に設定されている為そのURLをコピー.jpg" alt="Step 9: URLをコピー" loading="lazy" />
+    </div>
+
+    <!-- STEP 10 -->
+    <div class="step">
+      <div class="step-number">10</div>
+      <h2>ソースが追加されたら、サイズを調整</h2>
+      <p class="step-desc">「追加」を押すとソースが表示されます。配信画面上でサイズと位置を調整していきます。</p>
+      <img class="step-img" src="/guide/10追加を押すとこうなり、サイズ調整をしていきます.jpg" alt="Step 10: サイズ調整" loading="lazy" />
+    </div>
+
+    <!-- STEP 11 -->
+    <div class="step">
+      <div class="step-number">11</div>
+      <h2>画面サイズに合わせて拡大</h2>
+      <p class="step-desc">おすすめは赤枠内を右クリックして「画面サイズに合わせる」を選択。両端まで拡大されます。</p>
+      <img class="step-img" src="/guide/１１おすすめは赤枠内右クリックから画面サイズに合わせるを選択。両端まで拡大されます.jpg" alt="Step 11: 画面サイズに合わせる" loading="lazy" />
+      <div class="step-note">💡 右クリック →「画面サイズに合わせる」で一発フィットします。</div>
+    </div>
+
+    <!-- STEP 12 -->
+    <div class="step">
+      <div class="step-number">12</div>
+      <h2>完成！位置調整をして準備完了 🎉</h2>
+      <p class="step-desc">位置調整をした完成形がこちら。これでギフトが届くと、自動的にアニメーションが配信画面に表示されます！</p>
+      <img class="step-img" src="/guide/１２位置調整をした完成形がこちら.jpg" alt="Step 12: 完成形" loading="lazy" />
+    </div>
+
+  </div>
+
+  <footer class="guide-footer">
+    <p>ご不明な点がございましたら、お気軽にDMでご連絡ください。</p>
+    <a href="/" class="guide-cta">ANIGIFTトップに戻る</a>
+  </footer>
+
+</body>
+</html>
