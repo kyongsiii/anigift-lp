@@ -743,6 +743,14 @@ footer{background:var(--bg-deep);color:var(--text-sub);padding:56px 0 0;border-t
   color:var(--text);
 }
 
+.chat-video-label{
+  font-size:.72rem;
+  font-weight:700;
+  color:var(--pink);
+  margin-bottom:6px;
+  letter-spacing:.05em;
+}
+
 .chat-date-divider{
   text-align:center;
   font-size:.75rem;font-weight:600;
