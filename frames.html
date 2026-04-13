@@ -1,0 +1,327 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>SUPER FAN Name Frame</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@700;900&display=swap" rel="stylesheet" />
+  <style>
+    *{margin:0;padding:0;box-sizing:border-box}
+    body{
+      background:#111;
+      display:flex;
+      flex-direction:column;
+      align-items:center;
+      justify-content:center;
+      min-height:100vh;
+      gap:60px;
+      padding:40px;
+      font-family:'Inter',sans-serif;
+    }
+    .label{color:#666;font-size:14px;margin-bottom:8px}
+
+    /* ===== FRAME CONTAINER ===== */
+    .frame-wrap{
+      position:relative;
+      width:1920px;
+      height:1080px;
+      /* Green for chroma key compositing preview */
+      background:#00ff00;
+      overflow:hidden;
+    }
+    .frame-wrap--transparent{
+      background:transparent;
+    }
+
+    /* ===== SUPERFAN FRAME ===== */
+    .sf-frame{
+      position:absolute;
+      bottom:80px;
+      left:50%;
+      transform:translateX(-50%);
+      width:680px;
+    }
+
+    /* Outer glow */
+    .sf-frame::before{
+      content:'';
+      position:absolute;
+      inset:-8px;
+      border-radius:24px;
+      background:linear-gradient(135deg,rgba(255,184,0,.4),rgba(168,85,247,.3),rgba(255,184,0,.4));
+      filter:blur(12px);
+      z-index:0;
+    }
+
+    .sf-card{
+      position:relative;
+      z-index:1;
+      border-radius:16px;
+      border:3px solid;
+      border-image:linear-gradient(135deg,#ffd700,#ff8c00,#ffd700) 1;
+      border-radius:16px;
+      overflow:hidden;
+    }
+
+    /* Top bar */
+    .sf-top{
+      background:linear-gradient(135deg,#1a0a2e,#2d1b4e);
+      padding:10px 24px;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      gap:12px;
+      border-bottom:2px solid rgba(255,184,0,.3);
+    }
+    .sf-star{
+      font-size:20px;
+      color:#ffd700;
+      text-shadow:0 0 8px rgba(255,215,0,.6);
+    }
+    .sf-title{
+      font-size:18px;
+      font-weight:900;
+      letter-spacing:.15em;
+      background:linear-gradient(135deg,#ffd700,#ffaa00);
+      -webkit-background-clip:text;
+      -webkit-text-fill-color:transparent;
+    }
+
+    /* Name area */
+    .sf-name-area{
+      background:linear-gradient(180deg,rgba(13,5,30,.95),rgba(20,10,40,.95));
+      padding:20px 40px;
+      text-align:center;
+      min-height:72px;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      position:relative;
+    }
+    /* Decorative corners */
+    .sf-name-area::before,
+    .sf-name-area::after{
+      content:'✦';
+      position:absolute;
+      top:50%;transform:translateY(-50%);
+      font-size:16px;
+      color:rgba(255,215,0,.4);
+    }
+    .sf-name-area::before{left:16px}
+    .sf-name-area::after{right:16px}
+
+    .sf-name-placeholder{
+      font-size:32px;
+      font-weight:900;
+      color:rgba(255,255,255,.15);
+      letter-spacing:.1em;
+    }
+
+    /* Bottom accent */
+    .sf-bottom{
+      height:6px;
+      background:linear-gradient(90deg,transparent,#ffd700,#ff8c00,#ffd700,transparent);
+    }
+
+    /* ===== TROPHY ICONS ===== */
+    .sf-trophy-left,
+    .sf-trophy-right{
+      position:absolute;
+      bottom:80px;
+      font-size:48px;
+      filter:drop-shadow(0 0 12px rgba(255,215,0,.4));
+    }
+    .sf-trophy-left{
+      left:calc(50% - 400px);
+    }
+    .sf-trophy-right{
+      right:calc(50% - 400px);
+    }
+
+    /* ===== SPARKLE PARTICLES ===== */
+    .sparkle{
+      position:absolute;
+      width:6px;height:6px;
+      background:#ffd700;
+      border-radius:50%;
+      box-shadow:0 0 6px #ffd700;
+      animation:sparkle 2s ease-in-out infinite;
+    }
+    @keyframes sparkle{
+      0%,100%{opacity:0;transform:scale(0)}
+      50%{opacity:1;transform:scale(1)}
+    }
+
+    /* ===== HEARTME FRAME ===== */
+    .hm-frame{
+      position:absolute;
+      bottom:80px;
+      left:50%;
+      transform:translateX(-50%);
+      width:580px;
+    }
+    .hm-frame::before{
+      content:'';
+      position:absolute;
+      inset:-8px;
+      border-radius:24px;
+      background:linear-gradient(135deg,rgba(255,45,120,.4),rgba(255,105,180,.3),rgba(255,45,120,.4));
+      filter:blur(12px);
+      z-index:0;
+    }
+    .hm-card{
+      position:relative;
+      z-index:1;
+      border-radius:16px;
+      border:3px solid;
+      border-image:linear-gradient(135deg,#ff69b4,#ff2d78,#ff69b4) 1;
+      overflow:hidden;
+    }
+    .hm-top{
+      background:linear-gradient(135deg,#2e0a1a,#4e1b2d);
+      padding:10px 24px;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      gap:12px;
+      border-bottom:2px solid rgba(255,45,120,.3);
+    }
+    .hm-heart{
+      font-size:20px;
+      color:#ff69b4;
+      text-shadow:0 0 8px rgba(255,105,180,.6);
+    }
+    .hm-title{
+      font-size:18px;
+      font-weight:900;
+      letter-spacing:.15em;
+      background:linear-gradient(135deg,#ff69b4,#ff2d78);
+      -webkit-background-clip:text;
+      -webkit-text-fill-color:transparent;
+    }
+    .hm-name-area{
+      background:linear-gradient(180deg,rgba(30,5,15,.95),rgba(40,10,20,.95));
+      padding:20px 40px;
+      text-align:center;
+      min-height:72px;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      position:relative;
+    }
+    .hm-name-area::before,
+    .hm-name-area::after{
+      content:'♥';
+      position:absolute;
+      top:50%;transform:translateY(-50%);
+      font-size:14px;
+      color:rgba(255,105,180,.3);
+    }
+    .hm-name-area::before{left:16px}
+    .hm-name-area::after{right:16px}
+    .hm-bottom{
+      height:6px;
+      background:linear-gradient(90deg,transparent,#ff69b4,#ff2d78,#ff69b4,transparent);
+    }
+
+    .hm-heart-left,
+    .hm-heart-right{
+      position:absolute;
+      bottom:85px;
+      font-size:40px;
+      filter:drop-shadow(0 0 12px rgba(255,105,180,.4));
+    }
+    .hm-heart-left{left:calc(50% - 340px)}
+    .hm-heart-right{right:calc(50% - 340px)}
+
+    /* Toggle */
+    .toggle{
+      position:fixed;
+      top:20px;right:20px;
+      padding:10px 20px;
+      background:#333;
+      color:#fff;
+      border:1px solid #555;
+      border-radius:8px;
+      cursor:pointer;
+      font-size:14px;
+      z-index:999;
+    }
+    .toggle:hover{background:#444}
+  </style>
+</head>
+<body>
+
+  <button class="toggle" onclick="toggleBg()">背景切替（緑 ↔ 透明）</button>
+
+  <!-- ===== SUPER FAN FRAME ===== -->
+  <p class="label">SUPER FAN フレーム（1920×1080）─ スクショ用</p>
+  <div class="frame-wrap" id="sf-wrap">
+    <!-- Sparkles -->
+    <div class="sparkle" style="top:60%;left:30%;animation-delay:0s"></div>
+    <div class="sparkle" style="top:55%;left:65%;animation-delay:.5s"></div>
+    <div class="sparkle" style="top:70%;left:45%;animation-delay:1s"></div>
+    <div class="sparkle" style="top:50%;left:55%;animation-delay:1.5s"></div>
+    <div class="sparkle" style="top:65%;left:35%;animation-delay:.8s"></div>
+
+    <!-- Trophies -->
+    <div class="sf-trophy-left">🏆</div>
+    <div class="sf-trophy-right">🏆</div>
+
+    <!-- Frame -->
+    <div class="sf-frame">
+      <div class="sf-card">
+        <div class="sf-top">
+          <span class="sf-star">⭐</span>
+          <span class="sf-title">SUPER FAN</span>
+          <span class="sf-star">⭐</span>
+        </div>
+        <div class="sf-name-area">
+          <span class="sf-name-placeholder">ここにお名前が入ります</span>
+        </div>
+        <div class="sf-bottom"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===== HEART ME FRAME ===== -->
+  <p class="label">HEART ME フレーム（1920×1080）─ スクショ用</p>
+  <div class="frame-wrap" id="hm-wrap">
+    <!-- Sparkles -->
+    <div class="sparkle" style="top:60%;left:35%;animation-delay:.3s;background:#ff69b4;box-shadow:0 0 6px #ff69b4"></div>
+    <div class="sparkle" style="top:55%;left:60%;animation-delay:.8s;background:#ff69b4;box-shadow:0 0 6px #ff69b4"></div>
+    <div class="sparkle" style="top:68%;left:50%;animation-delay:1.2s;background:#ff69b4;box-shadow:0 0 6px #ff69b4"></div>
+    <div class="sparkle" style="top:52%;left:42%;animation-delay:1.8s;background:#ff69b4;box-shadow:0 0 6px #ff69b4"></div>
+
+    <!-- Hearts -->
+    <div class="hm-heart-left">💖</div>
+    <div class="hm-heart-right">💖</div>
+
+    <!-- Frame -->
+    <div class="hm-frame">
+      <div class="hm-card">
+        <div class="hm-top">
+          <span class="hm-heart">💗</span>
+          <span class="hm-title">HEART ME</span>
+          <span class="hm-heart">💗</span>
+        </div>
+        <div class="hm-name-area">
+          <span class="sf-name-placeholder">ここにお名前が入ります</span>
+        </div>
+        <div class="hm-bottom"></div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    let isGreen = true;
+    function toggleBg(){
+      isGreen = !isGreen;
+      document.querySelectorAll('.frame-wrap').forEach(el => {
+        el.style.background = isGreen ? '#00ff00' : 'transparent';
+      });
+    }
+  </script>
+
+</body>
+</html>
