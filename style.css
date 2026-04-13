@@ -1296,14 +1296,14 @@ footer{background:var(--bg-deep);color:var(--text-sub);padding:56px 0 0;border-t
   flex:1;
 }
 .creator-name{
-  font-size:1.3rem;
+  font-size:1.6rem;
   font-weight:900;
-  margin-bottom:4px;
+  margin-bottom:6px;
 }
 .creator-role{
-  font-size:.82rem;
+  font-size:.92rem;
   color:var(--text-sub);
-  margin-bottom:16px;
+  margin-bottom:20px;
 }
 .creator-badges{
   display:flex;
@@ -1315,19 +1315,22 @@ footer{background:var(--bg-deep);color:var(--text-sub);padding:56px 0 0;border-t
   display:inline-flex;
   align-items:center;
   gap:6px;
-  padding:6px 14px;
+  padding:7px 16px;
   border-radius:20px;
-  font-size:.78rem;
+  font-size:.84rem;
   font-weight:700;
   background:rgba(255,184,0,.08);
   color:var(--gold);
   border:1px solid rgba(255,184,0,.15);
 }
-.badge-icon{font-size:.9rem}
+.badge-icon{
+  display:inline-flex;
+  align-items:center;
+}
 .creator-message{
-  font-size:.88rem;
+  font-size:.95rem;
   color:var(--text-sub);
-  line-height:1.8;
+  line-height:1.9;
 }
 .creator-message em{
   color:var(--pink);
@@ -1346,4 +1349,9 @@ footer{background:var(--bg-deep);color:var(--text-sub);padding:56px 0 0;border-t
     width:120px;height:120px;
   }
   .creator-badges{justify-content:center}
+}
+
+.req-icon{
+  vertical-align:-4px;
+  margin-right:4px;
 }
