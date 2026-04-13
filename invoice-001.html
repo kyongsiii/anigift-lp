@@ -1,0 +1,472 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>請求書 ANIGIFT-2026-001</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;900&family=Noto+Sans+JP:wght@400;500;700;900&display=swap" rel="stylesheet" />
+  <style>
+    *{margin:0;padding:0;box-sizing:border-box}
+    @page{size:A4;margin:0}
+    body{
+      font-family:'Noto Sans JP','Inter',sans-serif;
+      background:#f0f0f5;
+      color:#1e1e2e;
+      line-height:1.6;
+      -webkit-print-color-adjust:exact;
+      print-color-adjust:exact;
+    }
+    .invoice{
+      width:210mm;
+      min-height:297mm;
+      margin:0 auto;
+      background:#fff;
+      padding:0;
+      box-shadow:0 4px 32px rgba(0,0,0,.08);
+      overflow:hidden;
+    }
+    @media print{
+      body{background:#fff}
+      .invoice{box-shadow:none}
+      .no-print{display:none !important}
+    }
+
+    /* ===== TOP BAR ===== */
+    .inv-topbar{
+      background:linear-gradient(135deg,#0d0d1a,#1a1a2e);
+      padding:28px 48px 24px;
+      display:flex;
+      justify-content:space-between;
+      align-items:flex-start;
+    }
+    .inv-brand{
+      display:flex;
+      align-items:center;
+      gap:16px;
+    }
+    .inv-logo{
+      width:40px;height:40px;
+      border-radius:10px;
+      background:linear-gradient(135deg,#ff2d78,#a855f7);
+      display:flex;align-items:center;justify-content:center;
+      color:#fff;font-weight:900;font-size:16px;
+    }
+    .inv-brand-text{color:#fff}
+    .inv-brand-name{font-size:18px;font-weight:900;letter-spacing:.05em}
+    .inv-brand-sub{font-size:10px;color:rgba(255,255,255,.5);margin-top:2px}
+    .inv-doc-type{
+      text-align:right;
+      color:#fff;
+    }
+    .inv-title{
+      font-size:24px;
+      font-weight:900;
+      letter-spacing:.2em;
+      margin-bottom:8px;
+    }
+    .inv-meta-row{
+      font-size:11px;
+      color:rgba(255,255,255,.55);
+      margin-bottom:3px;
+    }
+    .inv-meta-row span{
+      color:rgba(255,255,255,.85);
+      font-weight:600;
+      margin-left:8px;
+    }
+
+    /* ===== BODY ===== */
+    .inv-body{
+      padding:28px 48px 24px;
+    }
+
+    /* PARTIES */
+    .inv-parties{
+      display:flex;
+      justify-content:space-between;
+      margin-bottom:24px;
+      gap:40px;
+    }
+    .inv-to,.inv-from{flex:1}
+    .inv-label{
+      font-size:10px;
+      font-weight:700;
+      color:#999;
+      letter-spacing:.12em;
+      text-transform:uppercase;
+      margin-bottom:8px;
+    }
+    .inv-client-name{
+      font-size:20px;
+      font-weight:900;
+      padding-bottom:12px;
+      border-bottom:2px solid #1e1e2e;
+    }
+    .inv-sama{font-weight:400;font-size:14px;margin-left:6px;color:#888}
+    .inv-from-name{
+      font-size:15px;
+      font-weight:800;
+      margin-bottom:6px;
+    }
+    .inv-from-detail{
+      font-size:11px;
+      color:#777;
+      line-height:1.7;
+    }
+
+    /* AMOUNT */
+    .inv-amount-box{
+      background:linear-gradient(135deg,#f8f7ff,#f0eeff);
+      border:1px solid #e4e0f5;
+      border-radius:12px;
+      padding:16px 28px;
+      margin-bottom:24px;
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+    }
+    .inv-amount-label{
+      font-size:13px;
+      font-weight:700;
+      color:#666;
+    }
+    .inv-amount-value{
+      font-size:30px;
+      font-weight:900;
+      color:#1e1e2e;
+      font-family:'Inter','Noto Sans JP',sans-serif;
+    }
+    .inv-amount-value .yen{font-size:16px;font-weight:700;margin-right:2px;color:#888}
+
+    /* TABLE */
+    .inv-table{
+      width:100%;
+      border-collapse:collapse;
+      margin-bottom:16px;
+      font-size:12.5px;
+    }
+    .inv-table thead th{
+      background:#f7f7fa;
+      font-weight:700;
+      padding:10px 16px;
+      text-align:left;
+      font-size:10px;
+      letter-spacing:.1em;
+      color:#888;
+      border-bottom:2px solid #eee;
+    }
+    .inv-table thead th:nth-child(3),
+    .inv-table thead th:nth-child(4){text-align:right}
+    .inv-table tbody td{
+      padding:10px 16px;
+      border-bottom:1px solid #f3f3f5;
+      vertical-align:top;
+    }
+    .inv-table tbody td:nth-child(3),
+    .inv-table tbody td:nth-child(4){text-align:right;font-family:'Inter',sans-serif;font-weight:600}
+    .inv-table tbody td:nth-child(2){text-align:center;color:#888}
+    .inv-table thead th:nth-child(2){text-align:center}
+    .inv-table tbody tr:last-child td{border-bottom:none}
+    .item-name{font-weight:700;color:#1e1e2e}
+    .item-desc{font-size:10.5px;color:#999;margin-top:3px}
+
+    /* TOTALS */
+    .inv-totals{
+      margin-left:auto;
+      width:300px;
+      margin-bottom:24px;
+    }
+    .inv-total-row{
+      display:flex;
+      justify-content:space-between;
+      padding:9px 0;
+      font-size:12.5px;
+      color:#555;
+    }
+    .inv-total-row span:last-child{font-family:'Inter',sans-serif;font-weight:600}
+    .inv-total-row.discount{color:#e53935}
+    .inv-total-row.grand{
+      border-top:2px solid #1e1e2e;
+      padding-top:14px;
+      margin-top:8px;
+      font-size:16px;
+      font-weight:900;
+      color:#1e1e2e;
+    }
+
+    /* PAYMENT */
+    .inv-payment{
+      background:#fafafa;
+      border:1px solid #eee;
+      border-radius:10px;
+      padding:16px 24px;
+      margin-bottom:20px;
+    }
+    .inv-payment-title{
+      font-size:10px;
+      font-weight:700;
+      color:#999;
+      letter-spacing:.12em;
+      margin-bottom:14px;
+    }
+    .inv-payment-grid{
+      display:grid;
+      grid-template-columns:1fr 1fr 1fr;
+      gap:12px;
+    }
+    .inv-payment-item dt{
+      font-size:10px;
+      color:#999;
+      font-weight:600;
+      margin-bottom:4px;
+    }
+    .inv-payment-item dd{
+      font-size:13px;
+      font-weight:700;
+      color:#1e1e2e;
+    }
+    .status-paid{
+      display:inline-block;
+      padding:3px 14px;
+      border-radius:20px;
+      background:#e8f5e9;
+      color:#2e7d32;
+      font-weight:700;
+      font-size:11px;
+    }
+
+    /* NOTES */
+    .inv-notes{
+      font-size:10.5px;
+      color:#aaa;
+      padding-top:14px;
+      border-top:1px solid #f0f0f0;
+    }
+    .inv-notes p{margin-bottom:3px}
+
+    /* ===== DIGITAL STAMP (角印) ===== */
+    .inv-stamp-area{
+      display:flex;
+      justify-content:flex-end;
+      margin-top:20px;
+    }
+    .digital-stamp{
+      width:72px;
+      height:72px;
+      border:2.5px solid #b82020;
+      border-radius:4px;
+      display:flex;
+      flex-direction:column;
+      align-items:center;
+      justify-content:center;
+      color:#b82020;
+      font-weight:900;
+      line-height:1.15;
+      transform:rotate(-6deg);
+      position:relative;
+      opacity:.8;
+      font-family:'Noto Sans JP',sans-serif;
+    }
+    .digital-stamp::before{
+      content:'';
+      position:absolute;
+      inset:2.5px;
+      border:1.5px solid #b82020;
+      border-radius:2px;
+      opacity:.6;
+    }
+    .stamp-line{
+      font-size:11px;
+      letter-spacing:.12em;
+    }
+    .stamp-line.small{
+      font-size:7.5px;
+      letter-spacing:.08em;
+      opacity:.75;
+    }
+
+    /* ===== FOOTER ===== */
+    .inv-footer{
+      background:#fafafa;
+      border-top:1px solid #eee;
+      padding:12px 48px;
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+      font-size:9.5px;
+      color:#bbb;
+    }
+
+    /* PRINT BUTTON */
+    .print-bar{
+      text-align:center;
+      padding:28px;
+    }
+    .print-btn{
+      padding:14px 48px;
+      border:none;
+      border-radius:10px;
+      background:linear-gradient(135deg,#1e1e2e,#2a2a3e);
+      color:#fff;
+      font-size:14px;
+      font-weight:700;
+      cursor:pointer;
+      font-family:'Noto Sans JP',sans-serif;
+      transition:transform .2s;
+    }
+    .print-btn:hover{transform:translateY(-1px);box-shadow:0 4px 16px rgba(0,0,0,.15)}
+  </style>
+</head>
+<body>
+
+  <div class="print-bar no-print">
+    <button class="print-btn" onclick="window.print()">PDF保存 / 印刷する</button>
+  </div>
+
+  <div class="invoice">
+
+    <!-- TOP BAR -->
+    <div class="inv-topbar">
+      <div class="inv-brand">
+        <div class="inv-logo">A</div>
+        <div class="inv-brand-text">
+          <div class="inv-brand-name">DAIZU合同会社</div>
+          <div class="inv-brand-sub">ANIGIFT — ギフトアニメーション制作</div>
+        </div>
+      </div>
+      <div class="inv-doc-type">
+        <div class="inv-title">請 求 書</div>
+        <div class="inv-meta-row">請求番号<span>ANIGIFT-2026-001</span></div>
+        <div class="inv-meta-row">発行日<span>2026年4月14日</span></div>
+      </div>
+    </div>
+
+    <!-- BODY -->
+    <div class="inv-body">
+
+      <!-- PARTIES -->
+      <div class="inv-parties">
+        <div class="inv-to">
+          <div class="inv-label">BILL TO</div>
+          <div class="inv-client-name">んばぁっっ！<span class="inv-sama">様</span></div>
+        </div>
+        <div class="inv-from">
+          <div class="inv-label">FROM</div>
+          <div class="inv-from-name">DAIZU合同会社</div>
+          <div class="inv-from-detail">
+            〒150-0002<br>
+            東京都渋谷区渋谷2丁目19-15<br>
+            宮益坂ビルディング609
+          </div>
+        </div>
+      </div>
+
+      <!-- AMOUNT -->
+      <div class="inv-amount-box">
+        <div class="inv-amount-label">ご請求金額（税込）</div>
+        <div class="inv-amount-value"><span class="yen">¥</span>24,500</div>
+      </div>
+
+      <!-- TABLE -->
+      <table class="inv-table">
+        <thead>
+          <tr>
+            <th style="width:50%">品目</th>
+            <th style="width:14%">数量</th>
+            <th style="width:16%">単価</th>
+            <th style="width:20%">金額</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>
+              <div class="item-name">ギフトアニメーション制作 10本プレミアムプラン</div>
+              <div class="item-desc">TikTok LIVE用オリジナルギフトアニメーション × 10本</div>
+            </td>
+            <td>1</td>
+            <td>¥25,000</td>
+            <td>¥25,000</td>
+          </tr>
+          <tr>
+            <td>
+              <div class="item-name">スパファン専用ハートミー 名前入りフレーム</div>
+              <div class="item-desc">スーパーファン限定ハートミー演出用カスタムフレーム</div>
+            </td>
+            <td>1</td>
+            <td>¥1,000</td>
+            <td>¥1,000</td>
+          </tr>
+          <tr>
+            <td>
+              <div class="item-name">メンレベアップ専用 名前入りフレーム</div>
+              <div class="item-desc">メンバーレベルアップ演出用カスタムフレーム</div>
+            </td>
+            <td>1</td>
+            <td>¥1,000</td>
+            <td>¥1,000</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <!-- TOTALS -->
+      <div class="inv-totals">
+        <div class="inv-total-row">
+          <span>小計</span>
+          <span>¥27,000</span>
+        </div>
+        <div class="inv-total-row discount">
+          <span>初回クーポン 10%OFF</span>
+          <span>-¥2,500</span>
+        </div>
+        <div class="inv-total-row grand">
+          <span>合計（税込）</span>
+          <span>¥24,500</span>
+        </div>
+      </div>
+
+      <!-- PAYMENT -->
+      <div class="inv-payment">
+        <div class="inv-payment-title">PAYMENT INFO</div>
+        <div class="inv-payment-grid">
+          <dl class="inv-payment-item">
+            <dt>お支払い方法</dt>
+            <dd>PayPay送金</dd>
+          </dl>
+          <dl class="inv-payment-item">
+            <dt>お支払い状況</dt>
+            <dd><span class="status-paid">入金済み</span></dd>
+          </dl>
+          <dl class="inv-payment-item">
+            <dt>入金確認日</dt>
+            <dd>2026年4月14日</dd>
+          </dl>
+        </div>
+      </div>
+
+      <!-- NOTES + STAMP -->
+      <div class="inv-notes">
+        <p>※ 本請求書はDAIZU合同会社が運営するANIGIFTサービスの取引記録です。</p>
+        <p>※ 金額は税込表示です。</p>
+      </div>
+
+      <div class="inv-stamp-area">
+        <div class="digital-stamp">
+          <span class="stamp-line small">DAIZU</span>
+          <span class="stamp-line">合同</span>
+          <span class="stamp-line">会社</span>
+          <span class="stamp-line small">代表之印</span>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- FOOTER -->
+    <div class="inv-footer">
+      <span>DAIZU合同会社 — ANIGIFT</span>
+      <span>〒150-0002 東京都渋谷区渋谷2-19-15 宮益坂ビルディング609</span>
+    </div>
+
+  </div>
+
+</body>
+</html>
