@@ -1,0 +1,451 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>ヒアリングフォーム | ANIGIFT</title>
+  <meta name="description" content="ANIGIFTギフトアニメーション制作のヒアリングフォームです。" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;900&family=Noto+Sans+JP:wght@400;500;700;900&display=swap" rel="stylesheet" />
+  <style>
+    *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+    :root{
+      --bg:#0b0a10;
+      --bg-card:#141420;
+      --bg-input:#1a1a2e;
+      --border:rgba(255,255,255,.08);
+      --border-focus:rgba(255,45,120,.4);
+      --text:#e8e6f0;
+      --text-sub:#9a99a8;
+      --text-muted:#5a5968;
+      --pink:#ff2d78;
+      --purple:#a855f7;
+      --accent:linear-gradient(135deg,#ff2d78,#a855f7);
+      --font:'Noto Sans JP','Inter',sans-serif;
+    }
+    html{scroll-behavior:smooth}
+    body{
+      font-family:var(--font);
+      background:var(--bg);
+      color:var(--text);
+      line-height:1.7;
+      -webkit-font-smoothing:antialiased;
+    }
+
+    /* HEADER */
+    .form-header{
+      text-align:center;
+      padding:80px 24px 40px;
+      border-bottom:1px solid var(--border);
+    }
+    .form-header .back-link{
+      display:inline-block;margin-bottom:20px;
+      font-size:.82rem;color:var(--text-muted);text-decoration:none;
+    }
+    .form-header .back-link:hover{color:var(--pink)}
+    .form-header h1{font-size:1.8rem;font-weight:900;line-height:1.3;margin-bottom:12px}
+    .form-header h1 span{background:var(--accent);-webkit-background-clip:text;-webkit-text-fill-color:transparent}
+    .form-header p{color:var(--text-sub);font-size:.88rem;max-width:480px;margin:0 auto}
+
+    /* CONTAINER */
+    .form-container{max-width:640px;margin:0 auto;padding:48px 24px 80px}
+
+    /* FIELD */
+    .field-group{margin-bottom:32px}
+    .field-group label.field-label{display:block;font-size:.92rem;font-weight:700;margin-bottom:8px}
+    .required{display:inline-block;margin-left:6px;padding:1px 8px;border-radius:4px;font-size:.65rem;font-weight:700;background:rgba(255,45,120,.15);color:var(--pink);vertical-align:middle}
+    .hint{display:block;font-size:.78rem;color:var(--text-muted);margin-bottom:10px}
+
+    /* INPUTS */
+    .input-text,.input-textarea{
+      width:100%;padding:14px 16px;border-radius:12px;
+      border:1.5px solid var(--border);background:var(--bg-input);
+      color:var(--text);font-size:.9rem;font-family:var(--font);
+      transition:border-color .2s;outline:none;
+    }
+    .input-text:focus,.input-textarea:focus{border-color:var(--border-focus);box-shadow:0 0 0 3px rgba(255,45,120,.1)}
+    .input-textarea{min-height:100px;resize:vertical}
+    .input-text:disabled,.input-textarea:disabled{opacity:.35;cursor:not-allowed}
+
+    /* RADIO */
+    .option-group{display:flex;flex-direction:column;gap:10px}
+    .option-item{
+      display:flex;align-items:center;gap:12px;
+      padding:12px 16px;border-radius:12px;
+      border:1.5px solid var(--border);background:var(--bg-input);
+      cursor:pointer;transition:border-color .2s;
+    }
+    .option-item:hover{border-color:rgba(255,255,255,.12)}
+    .option-item input[type="radio"],
+    .option-item input[type="checkbox"]{
+      appearance:none;width:20px;height:20px;
+      border-radius:50%;border:2px solid var(--text-muted);
+      background:transparent;cursor:pointer;flex-shrink:0;position:relative;
+    }
+    .option-item input[type="checkbox"]{border-radius:6px}
+    .option-item input[type="radio"]:checked,
+    .option-item input[type="checkbox"]:checked{border-color:var(--pink);background:var(--pink)}
+    .option-item input[type="radio"]:checked::after{
+      content:'';position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);
+      width:8px;height:8px;border-radius:50%;background:#fff;
+    }
+    .option-item input[type="checkbox"]:checked::after{
+      content:'✓';position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);
+      font-size:12px;color:#fff;font-weight:900;
+    }
+    .option-label{font-size:.88rem}
+    .option-label small{display:block;font-size:.75rem;color:var(--text-muted);margin-top:2px}
+
+    /* FILE */
+    .file-upload{
+      position:relative;display:flex;flex-direction:column;align-items:center;justify-content:center;
+      padding:28px;border-radius:12px;border:2px dashed var(--border);
+      background:var(--bg-input);cursor:pointer;transition:border-color .2s;text-align:center;
+    }
+    .file-upload:hover{border-color:var(--border-focus)}
+    .file-upload input{position:absolute;inset:0;opacity:0;cursor:pointer}
+    .file-upload-icon{font-size:28px;margin-bottom:6px}
+    .file-upload-text{font-size:.8rem;color:var(--text-muted)}
+
+    /* DIVIDER */
+    .divider{height:1px;background:var(--border);margin:40px 0}
+
+    /* SECTION TITLE */
+    .section-title{
+      font-size:1rem;font-weight:800;margin-bottom:24px;
+      padding-bottom:12px;border-bottom:1px solid var(--border);
+      display:flex;align-items:center;gap:8px;
+    }
+    .section-title .emoji{font-size:1.2rem}
+
+    /* GIFT CARD */
+    .gift-card{
+      border:1.5px solid var(--border);
+      border-radius:16px;
+      background:var(--bg-card);
+      padding:20px;
+      margin-bottom:16px;
+      transition:border-color .2s;
+    }
+    .gift-card:hover{border-color:rgba(255,255,255,.12)}
+    .gift-card-header{
+      display:flex;align-items:center;gap:12px;margin-bottom:14px;
+    }
+    .gift-num{
+      width:32px;height:32px;display:flex;align-items:center;justify-content:center;
+      border-radius:50%;background:var(--accent);
+      color:#fff;font-size:.75rem;font-weight:900;flex-shrink:0;
+    }
+    .gift-card-header .input-text{flex:1}
+    .gift-omakase{
+      display:flex;align-items:center;gap:8px;
+      margin-bottom:12px;cursor:pointer;
+      font-size:.82rem;color:var(--text-sub);
+    }
+    .gift-omakase input[type="checkbox"]{
+      appearance:none;width:18px;height:18px;
+      border-radius:5px;border:2px solid var(--text-muted);
+      background:transparent;cursor:pointer;position:relative;flex-shrink:0;
+    }
+    .gift-omakase input[type="checkbox"]:checked{border-color:var(--pink);background:var(--pink)}
+    .gift-omakase input[type="checkbox"]:checked::after{
+      content:'✓';position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);
+      font-size:11px;color:#fff;font-weight:900;
+    }
+    .gift-remove{
+      margin-left:auto;background:none;border:none;
+      color:var(--text-muted);font-size:1.1rem;cursor:pointer;
+      padding:4px 8px;border-radius:6px;
+    }
+    .gift-remove:hover{color:#ff4444;background:rgba(255,68,68,.1)}
+
+    /* ADD BTN */
+    .add-btn{
+      width:100%;padding:12px;border:1.5px dashed var(--border);
+      border-radius:12px;background:transparent;
+      color:var(--text-sub);font-size:.85rem;font-family:var(--font);
+      cursor:pointer;transition:border-color .2s,color .2s;
+    }
+    .add-btn:hover{border-color:var(--pink);color:var(--pink)}
+
+    /* SUBMIT */
+    .submit-btn{
+      display:block;width:100%;padding:18px;border:none;border-radius:14px;
+      background:var(--accent);color:#fff;font-size:1.05rem;font-weight:800;
+      font-family:var(--font);cursor:pointer;transition:transform .2s,box-shadow .2s;
+    }
+    .submit-btn:hover{transform:translateY(-2px);box-shadow:0 8px 28px rgba(255,45,120,.3)}
+    .submit-note{text-align:center;margin-top:12px;font-size:.75rem;color:var(--text-muted)}
+
+    /* FRAME OPTION */
+    .frame-section{
+      border:1.5px solid var(--border);
+      border-radius:16px;
+      background:var(--bg-card);
+      padding:20px;
+      margin-bottom:16px;
+    }
+    .frame-section-header{
+      display:flex;align-items:center;gap:10px;margin-bottom:14px;
+    }
+    .frame-badge{
+      padding:3px 10px;border-radius:20px;font-size:.7rem;font-weight:700;
+      background:rgba(255,45,120,.12);color:var(--pink);
+    }
+
+    @media(max-width:480px){
+      .gift-card-header{flex-wrap:wrap}
+    }
+  </style>
+</head>
+<body>
+
+  <header class="form-header">
+    <a href="/" class="back-link">← ANIGIFTトップに戻る</a>
+    <h1>ヒアリング<span>フォーム</span></h1>
+    <p>制作に必要な情報をお聞かせください✨<br>3〜5分ほどで完了します</p>
+  </header>
+
+  <div class="form-container">
+    <form action="#" method="POST" id="hearingForm">
+
+      <!-- ===== 基本情報 ===== -->
+      <div class="section-title"><span class="emoji">📋</span> 基本情報</div>
+
+      <div class="field-group">
+        <label class="field-label">配信名（TikTokアカウント名）<span class="required">必須</span></label>
+        <input type="text" class="input-text" name="streamer_name" placeholder="例：@anigift_chan" required />
+      </div>
+
+      <div class="divider"></div>
+
+      <!-- ===== 動画仕様 ===== -->
+      <div class="section-title"><span class="emoji">🎬</span> 動画の仕様</div>
+
+      <div class="field-group">
+        <label class="field-label">動画の比率<span class="required">必須</span></label>
+        <span class="hint">配信中もお顔がしっかり見えるよう、基本的には横型がおすすめです</span>
+        <div class="option-group">
+          <label class="option-item">
+            <input type="radio" name="aspect_ratio" value="16:9" required checked />
+            <span class="option-label">
+              16:9（横型）
+              <small>★おすすめ ─ 配信者のお顔が見えたまま演出が流れます</small>
+            </span>
+          </label>
+          <label class="option-item">
+            <input type="radio" name="aspect_ratio" value="9:16" />
+            <span class="option-label">
+              9:16（縦型）
+              <small>全画面を使った迫力演出</small>
+            </span>
+          </label>
+        </div>
+      </div>
+
+      <div class="field-group">
+        <label class="field-label">SDキャラについて<span class="required">必須</span></label>
+        <div class="option-group">
+          <label class="option-item">
+            <input type="radio" name="sd_char" value="have" required />
+            <span class="option-label">SDキャラを持っている</span>
+          </label>
+          <label class="option-item">
+            <input type="radio" name="sd_char" value="create" />
+            <span class="option-label">
+              持っていない（こちらで作成します）
+              <small>髪色・服装・雰囲気などの要素や参考画像をお送りください</small>
+            </span>
+          </label>
+        </div>
+      </div>
+
+      <div class="field-group">
+        <label class="field-label">SDキャラの参考画像</label>
+        <span class="hint">お持ちのSDキャラ画像、またはキャラ作成用の参考画像をアップロードしてください</span>
+        <div class="file-upload">
+          <input type="file" name="sd_char_image" accept="image/*" multiple />
+          <div class="file-upload-icon">📁</div>
+          <div class="file-upload-text">タップしてファイルを選択（複数可）<br>PNG / JPG / WEBP</div>
+        </div>
+      </div>
+
+      <div class="field-group">
+        <label class="field-label">キャラの特徴・要望</label>
+        <span class="hint">SDキャラ作成をご希望の場合、入れてほしい要素があればご記入ください</span>
+        <textarea class="input-textarea" name="char_request" placeholder="例：ピンク髪ツインテール、黒いパーカー、星のヘアピン など"></textarea>
+      </div>
+
+      <div class="divider"></div>
+
+      <!-- ===== ギフト詳細 ===== -->
+      <div class="section-title"><span class="emoji">🎁</span> ギフトごとの演出イメージ</div>
+      <p class="hint" style="margin-top:-16px;margin-bottom:20px">ギフトごとに理想の演出があればご記入ください。「おまかせ」にチェックを入れていただければ、こちらでシナリオを考えて2案お出しいたします。</p>
+
+      <div id="giftList">
+        <div class="gift-card" data-gift="1">
+          <div class="gift-card-header">
+            <span class="gift-num">1</span>
+            <input type="text" class="input-text" name="gift_name_1" placeholder="ギフト名（例：ハートミー）" />
+            <button type="button" class="gift-remove" onclick="removeGift(this)" title="削除">✕</button>
+          </div>
+          <label class="gift-omakase">
+            <input type="checkbox" name="gift_omakase_1" onchange="toggleOmakase(this)" />
+            おまかせにする
+          </label>
+          <textarea class="input-textarea" name="gift_scenario_1" placeholder="理想の演出イメージ&#10;例：ハートが飛び散ってキャラが嬉しそうにジャンプする"></textarea>
+        </div>
+
+        <div class="gift-card" data-gift="2">
+          <div class="gift-card-header">
+            <span class="gift-num">2</span>
+            <input type="text" class="input-text" name="gift_name_2" placeholder="ギフト名（例：銀河）" />
+            <button type="button" class="gift-remove" onclick="removeGift(this)" title="削除">✕</button>
+          </div>
+          <label class="gift-omakase">
+            <input type="checkbox" name="gift_omakase_2" onchange="toggleOmakase(this)" />
+            おまかせにする
+          </label>
+          <textarea class="input-textarea" name="gift_scenario_2" placeholder="理想の演出イメージ"></textarea>
+        </div>
+
+        <div class="gift-card" data-gift="3">
+          <div class="gift-card-header">
+            <span class="gift-num">3</span>
+            <input type="text" class="input-text" name="gift_name_3" placeholder="ギフト名（例：ローズ）" />
+            <button type="button" class="gift-remove" onclick="removeGift(this)" title="削除">✕</button>
+          </div>
+          <label class="gift-omakase">
+            <input type="checkbox" name="gift_omakase_3" onchange="toggleOmakase(this)" />
+            おまかせにする
+          </label>
+          <textarea class="input-textarea" name="gift_scenario_3" placeholder="理想の演出イメージ"></textarea>
+        </div>
+      </div>
+
+      <button type="button" class="add-btn" onclick="addGift()">＋ ギフトを追加する</button>
+
+      <div class="divider"></div>
+
+      <!-- ===== フレームオプション ===== -->
+      <div class="section-title"><span class="emoji">✨</span> オプション（フレーム演出）</div>
+      <p class="hint" style="margin-top:-16px;margin-bottom:20px">フレームオプションをご注文の方は、雰囲気のイメージがあればご記入ください</p>
+
+      <div id="frameList">
+        <!-- JS で動的追加 -->
+      </div>
+
+      <button type="button" class="add-btn" onclick="addFrame()">＋ フレームオプションを追加する</button>
+
+      <div class="divider"></div>
+
+      <!-- ===== 参考・その他 ===== -->
+      <div class="section-title"><span class="emoji">💬</span> その他</div>
+
+      <div class="field-group">
+        <label class="field-label">参考にしてほしい画像・動画</label>
+        <span class="hint">「こんな雰囲気！」という参考があれば添付してください</span>
+        <div class="file-upload">
+          <input type="file" name="reference" accept="image/*,video/*" multiple />
+          <div class="file-upload-icon">🖼️</div>
+          <div class="file-upload-text">タップしてファイルを選択（複数可）</div>
+        </div>
+      </div>
+
+      <div class="field-group">
+        <label class="field-label">参考URL</label>
+        <span class="hint">TikTokなどで見かけた演出の動画URLがあれば貼ってください</span>
+        <input type="text" class="input-text" name="ref_url" placeholder="https://..." />
+      </div>
+
+      <div class="field-group">
+        <label class="field-label">その他ご要望</label>
+        <textarea class="input-textarea" name="notes" placeholder="何かあればお気軽にお書きください！"></textarea>
+      </div>
+
+      <div class="divider"></div>
+
+      <button type="submit" class="submit-btn">送信する ✨</button>
+      <p class="submit-note">送信後、内容を確認してDMでご連絡いたします</p>
+
+    </form>
+  </div>
+
+  <script>
+    let giftCount = 3;
+    let frameCount = 0;
+
+    /* ===== GIFT ===== */
+    function addGift(){
+      if(giftCount >= 10) return;
+      giftCount++;
+      const card = document.createElement('div');
+      card.className = 'gift-card';
+      card.dataset.gift = giftCount;
+      card.innerHTML = `
+        <div class="gift-card-header">
+          <span class="gift-num">${giftCount}</span>
+          <input type="text" class="input-text" name="gift_name_${giftCount}" placeholder="ギフト名" />
+          <button type="button" class="gift-remove" onclick="removeGift(this)" title="削除">✕</button>
+        </div>
+        <label class="gift-omakase">
+          <input type="checkbox" name="gift_omakase_${giftCount}" onchange="toggleOmakase(this)" />
+          おまかせにする
+        </label>
+        <textarea class="input-textarea" name="gift_scenario_${giftCount}" placeholder="理想の演出イメージ"></textarea>
+      `;
+      document.getElementById('giftList').appendChild(card);
+      renumberGifts();
+    }
+
+    function removeGift(btn){
+      const cards = document.querySelectorAll('.gift-card');
+      if(cards.length <= 1) return;
+      btn.closest('.gift-card').remove();
+      giftCount = document.querySelectorAll('.gift-card').length;
+      renumberGifts();
+    }
+
+    function renumberGifts(){
+      document.querySelectorAll('.gift-card').forEach((card, i) => {
+        card.querySelector('.gift-num').textContent = i + 1;
+      });
+    }
+
+    function toggleOmakase(checkbox){
+      const card = checkbox.closest('.gift-card');
+      const textarea = card.querySelector('textarea');
+      if(checkbox.checked){
+        textarea.disabled = true;
+        textarea.value = '';
+        textarea.placeholder = 'こちらでシナリオを考えます ✨';
+      } else {
+        textarea.disabled = false;
+        textarea.placeholder = '理想の演出イメージ';
+      }
+    }
+
+    /* ===== FRAME ===== */
+    function addFrame(){
+      frameCount++;
+      const section = document.createElement('div');
+      section.className = 'frame-section';
+      section.innerHTML = `
+        <div class="frame-section-header">
+          <span class="frame-badge">OPTION</span>
+          <input type="text" class="input-text" name="frame_name_${frameCount}" placeholder="フレーム名（例：スパファン専用ハートミー）" style="flex:1" />
+          <button type="button" class="gift-remove" onclick="this.closest('.frame-section').remove()" title="削除">✕</button>
+        </div>
+        <textarea class="input-textarea" name="frame_image_${frameCount}" placeholder="フレームの雰囲気イメージ&#10;例：ゴールド系でステージっぽい感じ、キラキラ多め"></textarea>
+      `;
+      document.getElementById('frameList').appendChild(section);
+    }
+
+    /* ===== SUBMIT ===== */
+    document.getElementById('hearingForm').addEventListener('submit', function(e){
+      e.preventDefault();
+      alert('ありがとうございます！\\n内容を確認してDMでご連絡いたします✨');
+    });
+  </script>
+
+</body>
+</html>
