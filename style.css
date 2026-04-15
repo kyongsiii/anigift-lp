@@ -564,6 +564,26 @@ img{max-width:100%;display:block}
   .pricing-grid{grid-template-columns:1fr;max-width:360px;margin:0 auto}
   .pricing-card--popular:hover{transform:translateY(-8px)}
 }
+.payment-badges{
+  display:flex;justify-content:center;gap:16px;
+  margin-top:28px;flex-wrap:wrap;
+}
+.payment-badge{
+  display:inline-flex;align-items:center;gap:6px;
+  padding:8px 18px;
+  border:1px solid rgba(255,255,255,.2);
+  border-radius:8px;
+  font-size:.82rem;font-weight:600;
+  color:rgba(255,255,255,.7);
+  background:rgba(255,255,255,.04);
+  transition:all .2s;
+}
+.payment-badge:hover{
+  border-color:rgba(255,255,255,.35);
+  color:rgba(255,255,255,.9);
+  background:rgba(255,255,255,.07);
+}
+.payment-badge svg{opacity:.7}
 
 /* ===== FAQ ===== */
 #faq{background:var(--bg);position:relative;overflow:hidden}
