@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<title>ANIGIFT Watermark Generator</title>
+<style>
+  body { background: #1a1a2e; color: #fff; font-family: 'Inter', sans-serif; display: flex; justify-content: center; align-items: center; min-height: 100vh; margin: 0; }
+  .container { text-align: center; }
+  canvas { border: 1px solid rgba(255,255,255,.2); border-radius: 8px; }
+  button { margin-top: 20px; padding: 12px 32px; background: linear-gradient(135deg, #ff4d6d, #c9184a); color: #fff; border: none; border-radius: 8px; font-size: 16px; cursor: pointer; font-weight: 700; }
+  button:hover { opacity: .9; }
+  h1 { font-size: 1.4rem; margin-bottom: 20px; opacity: .8; }
+  .options { margin: 16px 0; display: flex; gap: 16px; justify-content: center; }
+  .options label { font-size: .9rem; opacity: .7; }
+  select, input[type=range] { background: #2a2a4a; color: #fff; border: 1px solid rgba(255,255,255,.2); border-radius: 4px; padding: 4px 8px; }
+</style>
+</head>
+<body>
+<div class="container">
+  <h1>ANIGIFT Watermark PNG Generator</h1>
+  
+  <div class="options">
+    <div>
+      <label>スタイル：</label>
+      <select id="style">
+        <option value="center">中央にドーン</option>
+        <option value="diagonal">斜めリピート</option>
+      </select>
+    </div>
+    <div>
+      <label>サイズ：</label>
+      <select id="size">
+        <option value="1920x1080">1920×1080 (16:9)</option>
+        <option value="1080x1920">1080×1920 (9:16)</option>
+      </select>
+    </div>
+    <div>
+      <label>透明度：</label>
+      <input type="range" id="opacity" min="10" max="80" value="30">
+      <span id="opVal">30%</span>
+    </div>
+  </div>
+
+  <canvas id="c" width="1920" height="1080"></canvas>
+  <br>
+  <button onclick="download()">PNG ダウンロード</button>
+</div>
+
+<script>
+const canvas = document.getElementById('c');
+const ctx = canvas.getContext('2d');
+const styleEl = document.getElementById('style');
+const sizeEl = document.getElementById('size');
+const opEl = document.getElementById('opacity');
+const opVal = document.getElementById('opVal');
+
+function draw() {
+  const [w, h] = sizeEl.value.split('x').map(Number);
+  canvas.width = w;
+  canvas.height = h;
+  // Scale canvas display
+  canvas.style.width = Math.min(w, 640) + 'px';
+  canvas.style.height = Math.min(h, 640) * (h/w) + 'px';
+  
+  const opacity = opEl.value / 100;
+  ctx.clearRect(0, 0, w, h);
+
+  // Checkerboard background for transparency preview
+  const sq = 20;
+  for (let y = 0; y < h; y += sq) {
+    for (let x = 0; x < w; x += sq) {
+      ctx.fillStyle = ((x/sq + y/sq) % 2 === 0) ? '#2a2a4a' : '#222244';
+      ctx.fillRect(x, y, sq, sq);
+    }
+  }
+
+  const style = styleEl.value;
+  ctx.fillStyle = `rgba(255, 255, 255, ${opacity})`;
+  ctx.textAlign = 'center';
+  ctx.textBaseline = 'middle';
+
+  if (style === 'center') {
+    ctx.font = `bold ${Math.floor(w * 0.08)}px Inter, Arial, sans-serif`;
+    ctx.fillText('ANIGIFT', w/2, h/2);
+    // Subtle line below
+    ctx.font = `${Math.floor(w * 0.025)}px Inter, Arial, sans-serif`;
+    ctx.fillText('PREVIEW', w/2, h/2 + w * 0.06);
+  } else {
+    ctx.font = `bold ${Math.floor(w * 0.04)}px Inter, Arial, sans-serif`;
+    ctx.save();
+    ctx.translate(w/2, h/2);
+    ctx.rotate(-30 * Math.PI / 180);
+    const gap = w * 0.18;
+    for (let y = -h; y < h * 2; y += gap) {
+      for (let x = -w; x < w * 2; x += gap * 1.8) {
+        ctx.fillText('ANIGIFT', x, y);
+      }
+    }
+    ctx.restore();
+  }
+}
+
+function downloadTransparent() {
+  // Create a new canvas with transparent background (no checkerboard)
+  const [w, h] = sizeEl.value.split('x').map(Number);
+  const dlCanvas = document.createElement('canvas');
+  dlCanvas.width = w;
+  dlCanvas.height = h;
+  const dlCtx = dlCanvas.getContext('2d');
+
+  const opacity = opEl.value / 100;
+  const style = styleEl.value;
+  dlCtx.fillStyle = `rgba(255, 255, 255, ${opacity})`;
+  dlCtx.textAlign = 'center';
+  dlCtx.textBaseline = 'middle';
+
+  if (style === 'center') {
+    dlCtx.font = `bold ${Math.floor(w * 0.08)}px Inter, Arial, sans-serif`;
+    dlCtx.fillText('ANIGIFT', w/2, h/2);
+    dlCtx.font = `${Math.floor(w * 0.025)}px Inter, Arial, sans-serif`;
+    dlCtx.fillText('PREVIEW', w/2, h/2 + w * 0.06);
+  } else {
+    dlCtx.font = `bold ${Math.floor(w * 0.04)}px Inter, Arial, sans-serif`;
+    dlCtx.save();
+    dlCtx.translate(w/2, h/2);
+    dlCtx.rotate(-30 * Math.PI / 180);
+    const gap = w * 0.18;
+    for (let y = -h; y < h * 2; y += gap) {
+      for (let x = -w; x < w * 2; x += gap * 1.8) {
+        dlCtx.fillText('ANIGIFT', x, y);
+      }
+    }
+    dlCtx.restore();
+  }
+  return dlCanvas;
+}
+
+function download() {
+  const dlCanvas = downloadTransparent();
+  const a = document.createElement('a');
+  a.download = `anigift-watermark-${styleEl.value}-${sizeEl.value}.png`;
+  a.href = dlCanvas.toDataURL('image/png');
+  a.click();
+}
+
+styleEl.addEventListener('change', draw);
+sizeEl.addEventListener('change', draw);
+opEl.addEventListener('input', () => { opVal.textContent = opEl.value + '%'; draw(); });
+
+draw();
+</script>
+</body>
+</html>
