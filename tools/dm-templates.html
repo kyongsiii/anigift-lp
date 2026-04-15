@@ -1,0 +1,420 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ANIGIFT DM テンプレート</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=Noto+Sans+JP:wght@400;600;700&display=swap');
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    background: #0d0d1a;
+    color: #e0e0e0;
+    font-family: 'Noto Sans JP', 'Inter', sans-serif;
+    padding: 24px;
+    min-height: 100vh;
+  }
+  h1 {
+    text-align: center;
+    font-size: 1.5rem;
+    margin-bottom: 8px;
+    background: linear-gradient(135deg, #ff6b9d, #c44dff);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+  .subtitle {
+    text-align: center;
+    font-size: .85rem;
+    color: #888;
+    margin-bottom: 32px;
+  }
+  .grid {
+    max-width: 900px;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+  }
+  .card {
+    background: rgba(255,255,255,.04);
+    border: 1px solid rgba(255,255,255,.08);
+    border-radius: 12px;
+    overflow: hidden;
+    transition: border-color .2s;
+  }
+  .card:hover { border-color: rgba(255,255,255,.15); }
+  .card-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 16px 20px;
+    cursor: pointer;
+    user-select: none;
+  }
+  .card-header:hover { background: rgba(255,255,255,.02); }
+  .card-title {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-weight: 700;
+    font-size: .95rem;
+  }
+  .card-emoji { font-size: 1.3rem; }
+  .card-tag {
+    font-size: .7rem;
+    padding: 3px 8px;
+    border-radius: 4px;
+    background: rgba(196,77,255,.15);
+    color: #c44dff;
+    font-weight: 600;
+  }
+  .card-arrow {
+    font-size: .8rem;
+    color: #666;
+    transition: transform .2s;
+  }
+  .card.open .card-arrow { transform: rotate(180deg); }
+  .card-body {
+    display: none;
+    padding: 0 20px 16px;
+  }
+  .card.open .card-body { display: block; }
+  .template-box {
+    background: rgba(0,0,0,.3);
+    border: 1px solid rgba(255,255,255,.06);
+    border-radius: 8px;
+    padding: 16px;
+    font-size: .88rem;
+    line-height: 1.8;
+    white-space: pre-wrap;
+    color: #ccc;
+    position: relative;
+    margin-bottom: 12px;
+  }
+  .template-box .editable {
+    color: #ff6b9d;
+    font-weight: 600;
+  }
+  .copy-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 8px 20px;
+    background: linear-gradient(135deg, #ff6b9d, #c44dff);
+    color: #fff;
+    border: none;
+    border-radius: 8px;
+    font-size: .85rem;
+    font-weight: 700;
+    cursor: pointer;
+    transition: opacity .2s, transform .1s;
+  }
+  .copy-btn:hover { opacity: .9; }
+  .copy-btn:active { transform: scale(.97); }
+  .copy-btn.copied {
+    background: #2ecc71;
+  }
+  .note {
+    font-size: .75rem;
+    color: #666;
+    margin-top: 8px;
+  }
+  .vars {
+    margin-top: 12px;
+    padding: 12px 16px;
+    background: rgba(255,107,157,.05);
+    border: 1px solid rgba(255,107,157,.1);
+    border-radius: 8px;
+  }
+  .vars-title {
+    font-size: .75rem;
+    color: #ff6b9d;
+    font-weight: 600;
+    margin-bottom: 6px;
+  }
+  .var-row {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 4px;
+  }
+  .var-row label {
+    font-size: .8rem;
+    color: #999;
+    min-width: 80px;
+  }
+  .var-row input {
+    flex: 1;
+    background: rgba(0,0,0,.3);
+    border: 1px solid rgba(255,255,255,.1);
+    border-radius: 4px;
+    padding: 4px 8px;
+    color: #fff;
+    font-size: .8rem;
+    font-family: inherit;
+  }
+  .divider {
+    height: 1px;
+    background: rgba(255,255,255,.06);
+    margin: 24px 0;
+  }
+  .section-label {
+    font-size: .75rem;
+    color: #666;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    margin-bottom: 12px;
+    padding-left: 4px;
+  }
+</style>
+</head>
+<body>
+
+<h1>ANIGIFT DM テンプレート</h1>
+<p class="subtitle">クリックでコピー → TikTok DMにペースト</p>
+
+<div class="grid">
+
+  <div class="section-label">📦 納品フロー</div>
+
+  <!-- 1: 第1弾送付 -->
+  <div class="card" onclick="toggleCard(this)">
+    <div class="card-header">
+      <div class="card-title">
+        <span class="card-emoji">🎬</span>
+        第1弾送付
+        <span class="card-tag">納品</span>
+      </div>
+      <span class="card-arrow">▼</span>
+    </div>
+    <div class="card-body">
+      <div class="template-box" id="t1">お待たせしました！
+まず第1弾として、以下の○本をお送りいたします🎬
+
+① <span class="editable">[ギフト名1]</span>
+② <span class="editable">[ギフト名2]</span>
+③ <span class="editable">[ギフト名3]</span>
+
+それぞれA案・B案の順でお送りしますので、
+お好みの方をお選びください✨</div>
+      <button class="copy-btn" onclick="event.stopPropagation();copyTemplate('t1',this)">📋 コピー</button>
+    </div>
+  </div>
+
+  <!-- 2: 第2弾送付 -->
+  <div class="card" onclick="toggleCard(this)">
+    <div class="card-header">
+      <div class="card-title">
+        <span class="card-emoji">🎬</span>
+        第2弾送付
+        <span class="card-tag">納品</span>
+      </div>
+      <span class="card-arrow">▼</span>
+    </div>
+    <div class="card-body">
+      <div class="template-box" id="t2">ありがとうございます！全てB案ですね、承知しました✨
+
+では続けて残りの○本をお送りします🎬
+
+④ <span class="editable">[ギフト名4]</span>
+⑤ <span class="editable">[ギフト名5]</span>
+⑥ <span class="editable">[ギフト名6]</span>
+
+こちらもA案・B案の順でお送りしますので、
+お好みの方をお選びください✨</div>
+      <button class="copy-btn" onclick="event.stopPropagation();copyTemplate('t2',this)">📋 コピー</button>
+    </div>
+  </div>
+
+  <!-- 3: 選択完了・承知 -->
+  <div class="card" onclick="toggleCard(this)">
+    <div class="card-header">
+      <div class="card-title">
+        <span class="card-emoji">✅</span>
+        選択完了・承知
+        <span class="card-tag">確認</span>
+      </div>
+      <span class="card-arrow">▼</span>
+    </div>
+    <div class="card-body">
+      <div class="template-box" id="t3">承知いたしました！
+それでは最終版を準備いたしますので、少々お待ちください✨</div>
+      <button class="copy-btn" onclick="event.stopPropagation();copyTemplate('t3',this)">📋 コピー</button>
+    </div>
+  </div>
+
+  <div class="divider"></div>
+  <div class="section-label">💡 アップセル</div>
+
+  <!-- 4: 不採用案の提案 -->
+  <div class="card" onclick="toggleCard(this)">
+    <div class="card-header">
+      <div class="card-title">
+        <span class="card-emoji">💰</span>
+        不採用案の追加提案
+        <span class="card-tag">アップセル</span>
+      </div>
+      <span class="card-arrow">▼</span>
+    </div>
+    <div class="card-body">
+      <div class="template-box" id="t4">選ぶの大変ですよね、お気持ちわかります✨
+
+もしよろしければ、選ばれなかった方も
+半額の¥1,490でお渡しできますので、
+ご興味があればお気軽にどうぞ🙌</div>
+      <button class="copy-btn" onclick="event.stopPropagation();copyTemplate('t4',this)">📋 コピー</button>
+    </div>
+  </div>
+
+  <!-- 5: データ保管 -->
+  <div class="card" onclick="toggleCard(this)">
+    <div class="card-header">
+      <div class="card-title">
+        <span class="card-emoji">💾</span>
+        データ保管の案内
+        <span class="card-tag">安心</span>
+      </div>
+      <span class="card-arrow">▼</span>
+    </div>
+    <div class="card-body">
+      <div class="template-box" id="t5">もちろん、削除はいたしませんのでご安心ください✨
+
+今回選ばれなかった方のデータはこちらで保管しておきますので、
+いつでもお声がけいただければお渡しできます🙌
+
+まずは他のギフトを優先していただいて、
+落ち着いたタイミングでご検討いただければと思います✨</div>
+      <button class="copy-btn" onclick="event.stopPropagation();copyTemplate('t5',this)">📋 コピー</button>
+    </div>
+  </div>
+
+  <div class="divider"></div>
+  <div class="section-label">⚠️ 説明・注意事項</div>
+
+  <!-- 6: 音源の著作権 -->
+  <div class="card" onclick="toggleCard(this)">
+    <div class="card-header">
+      <div class="card-title">
+        <span class="card-emoji">🎵</span>
+        音源の著作権説明
+        <span class="card-tag">重要</span>
+      </div>
+      <span class="card-arrow">▼</span>
+    </div>
+    <div class="card-body">
+      <div class="template-box" id="t6">音源をこちらで動画に埋め込んでしまうと
+著作権の関係がありますので、以下の形がベストかと思います✨
+
+動画（音なし）と音源を別々にTikfinityへセットしていただければ、
+再生タイミングもピッタリ合います🙌</div>
+      <button class="copy-btn" onclick="event.stopPropagation();copyTemplate('t6',this)">📋 コピー</button>
+    </div>
+  </div>
+
+  <!-- 7: リアル調・顔写真 -->
+  <div class="card" onclick="toggleCard(this)">
+    <div class="card-header">
+      <div class="card-title">
+        <span class="card-emoji">📸</span>
+        リアル調・顔写真の依頼
+        <span class="card-tag">確認</span>
+      </div>
+      <span class="card-arrow">▼</span>
+    </div>
+    <div class="card-body">
+      <div class="template-box" id="t7">こちら、リアル調の制作について確認させてください✨
+
+① リアル調のキャラクターを新たに作成する
+② 実際のお顔を合成して、より現実的なイメージで作成する
+
+どちらのイメージでしょうか？
+
+②の場合は、より鮮明なお顔の画像を
+共有いただく必要がありますが、そちらは問題ないでしょうか？🙌</div>
+      <button class="copy-btn" onclick="event.stopPropagation();copyTemplate('t7',this)">📋 コピー</button>
+    </div>
+  </div>
+
+  <!-- 8: 顔画像の取り扱い -->
+  <div class="card" onclick="toggleCard(this)">
+    <div class="card-header">
+      <div class="card-title">
+        <span class="card-emoji">🔒</span>
+        顔画像の取り扱い説明
+        <span class="card-tag">安心</span>
+      </div>
+      <span class="card-arrow">▼</span>
+    </div>
+    <div class="card-body">
+      <div class="template-box" id="t8">いただいたお顔の画像は、本制作のみに使用いたします。
+制作完了後、元の画像データはこちらで削除いたしますのでご安心ください🙌</div>
+      <button class="copy-btn" onclick="event.stopPropagation();copyTemplate('t8',this)">📋 コピー</button>
+    </div>
+  </div>
+
+  <!-- 9: 鮮明な画像について -->
+  <div class="card" onclick="toggleCard(this)">
+    <div class="card-header">
+      <div class="card-title">
+        <span class="card-emoji">🖼️</span>
+        鮮明な画像の説明
+        <span class="card-tag">案内</span>
+      </div>
+      <span class="card-arrow">▼</span>
+    </div>
+    <div class="card-body">
+      <div class="template-box" id="t9">ライブ配信のスクリーンショットなどでも大丈夫です✨
+
+お顔がはっきりと映っているものであれば問題ありません🙌
+
+ただ、ギフトのエフェクトなどがお顔に重なっていると
+仕上がりに影響が出てしまいますので、
+できるだけエフェクトのかかっていないタイミングの
+スクショをいただけると助かります✨</div>
+      <button class="copy-btn" onclick="event.stopPropagation();copyTemplate('t9',this)">📋 コピー</button>
+    </div>
+  </div>
+
+  <div class="divider"></div>
+  <div class="section-label">🔧 ステイ・保留</div>
+
+  <!-- 10: ギフト変更ステイ -->
+  <div class="card" onclick="toggleCard(this)">
+    <div class="card-header">
+      <div class="card-title">
+        <span class="card-emoji">⏸️</span>
+        ギフト変更ステイ
+        <span class="card-tag">保留</span>
+      </div>
+      <span class="card-arrow">▼</span>
+    </div>
+    <div class="card-body">
+      <div class="template-box" id="t10"><span class="editable">[ギフト名]</span>については、
+変更の可能性があるとのことでしたので、
+一旦ステイしております🙌</div>
+      <button class="copy-btn" onclick="event.stopPropagation();copyTemplate('t10',this)">📋 コピー</button>
+    </div>
+  </div>
+
+</div>
+
+<script>
+function toggleCard(card) {
+  card.classList.toggle('open');
+}
+
+function copyTemplate(id, btn) {
+  const el = document.getElementById(id);
+  const text = el.innerText;
+  navigator.clipboard.writeText(text).then(() => {
+    btn.textContent = '✅ コピーしました';
+    btn.classList.add('copied');
+    setTimeout(() => {
+      btn.textContent = '📋 コピー';
+      btn.classList.remove('copied');
+    }, 2000);
+  });
+}
+</script>
+</body>
+</html>
