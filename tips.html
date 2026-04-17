@@ -1,0 +1,517 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>配信トラブル対策ガイド | ANIGIFT</title>
+  <meta name="description" content="Tikfinityやギフトアニメーションの配信トラブルを解決。リンクの整理方法、カクつき対策、縦動画の設定など、よくある問題と解決策をまとめました。" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;900&family=Noto+Sans+JP:wght@400;500;700;900&display=swap" rel="stylesheet" />
+  <style>
+    *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+    :root{
+      --bg:#0b0a10;
+      --bg-card:#141420;
+      --border:rgba(255,255,255,.06);
+      --text:#e8e6f0;
+      --text-muted:#8a879e;
+      --pink:#ff2d78;
+      --purple:#a855f7;
+      --gold:#ffb800;
+      --green:#66bb6a;
+      --red:#ef5350;
+      --accent:linear-gradient(135deg,#ff2d78,#a855f7);
+    }
+    html{scroll-behavior:smooth}
+    body{
+      font-family:'Noto Sans JP','Inter',sans-serif;
+      background:var(--bg);color:var(--text);
+      line-height:1.8;
+      -webkit-font-smoothing:antialiased;
+    }
+    a{color:var(--pink);text-decoration:none}
+    a:hover{text-decoration:underline}
+
+    /* Header */
+    .guide-header{
+      text-align:center;
+      padding:80px 24px 40px;
+      border-bottom:1px solid var(--border);
+    }
+    .guide-header .back-link{
+      display:inline-block;
+      margin-bottom:24px;
+      font-size:.85rem;
+      color:var(--text-muted);
+    }
+    .guide-header .back-link:hover{color:var(--pink)}
+    .guide-header h1{
+      font-size:2rem;font-weight:900;
+      line-height:1.3;
+      margin-bottom:12px;
+    }
+    .guide-header h1 span{
+      background:var(--accent);
+      -webkit-background-clip:text;
+      -webkit-text-fill-color:transparent;
+    }
+    .guide-header p{
+      color:var(--text-muted);
+      font-size:.92rem;
+      max-width:560px;margin:0 auto;
+    }
+
+    /* Nav pills */
+    .guide-nav{
+      display:flex;
+      justify-content:center;
+      gap:8px;
+      padding:24px 16px;
+      border-bottom:1px solid var(--border);
+      flex-wrap:wrap;
+    }
+    .guide-nav a{
+      padding:8px 20px;
+      border-radius:99px;
+      font-size:.82rem;
+      font-weight:600;
+      background:var(--bg-card);
+      border:1px solid var(--border);
+      color:var(--text-muted);
+      transition:all .2s;
+    }
+    .guide-nav a:hover{
+      color:var(--pink);
+      border-color:var(--pink);
+      text-decoration:none;
+    }
+
+    /* Container */
+    .guide-container{
+      max-width:800px;
+      margin:0 auto;
+      padding:48px 24px 80px;
+    }
+
+    /* Section */
+    .tips-section{
+      margin-bottom:64px;
+      scroll-margin-top:100px;
+    }
+    .tips-section-header{
+      display:flex;
+      align-items:center;
+      gap:12px;
+      margin-bottom:8px;
+    }
+    .tips-section-tag{
+      display:inline-flex;
+      align-items:center;
+      gap:6px;
+      padding:4px 14px;
+      border-radius:99px;
+      font-size:.75rem;
+      font-weight:700;
+      letter-spacing:.05em;
+    }
+    .tips-section-tag--danger{
+      background:rgba(239,83,80,.12);
+      color:var(--red);
+      border:1px solid rgba(239,83,80,.2);
+    }
+    .tips-section-tag--warn{
+      background:rgba(255,184,0,.1);
+      color:var(--gold);
+      border:1px solid rgba(255,184,0,.2);
+    }
+    .tips-section-tag--info{
+      background:rgba(102,187,106,.1);
+      color:var(--green);
+      border:1px solid rgba(102,187,106,.2);
+    }
+    .tips-section h2{
+      font-size:1.3rem;
+      font-weight:800;
+      margin-bottom:16px;
+      line-height:1.5;
+    }
+    .tips-section-desc{
+      color:var(--text-muted);
+      font-size:.9rem;
+      margin-bottom:24px;
+      line-height:1.8;
+    }
+
+    /* Step within section */
+    .tip-step{
+      margin-bottom:32px;
+      padding:24px;
+      background:var(--bg-card);
+      border-radius:16px;
+      border:1px solid var(--border);
+    }
+    .tip-step h3{
+      font-size:.95rem;
+      font-weight:700;
+      margin-bottom:12px;
+      display:flex;
+      align-items:center;
+      gap:8px;
+    }
+    .tip-step-num{
+      display:inline-flex;
+      align-items:center;justify-content:center;
+      width:28px;height:28px;min-width:28px;
+      border-radius:50%;
+      background:var(--accent);
+      color:#fff;
+      font-size:.75rem;font-weight:900;
+    }
+    .tip-step p{
+      color:var(--text-muted);
+      font-size:.85rem;
+      margin-bottom:12px;
+    }
+    .tip-step img{
+      width:100%;
+      border-radius:10px;
+      border:1px solid var(--border);
+      box-shadow:0 4px 20px rgba(0,0,0,.4);
+      margin-top:8px;
+    }
+
+    /* Compare grid */
+    .compare-grid{
+      display:grid;
+      grid-template-columns:1fr 1fr;
+      gap:16px;
+      margin-bottom:16px;
+    }
+    .compare-card{
+      padding:16px;
+      border-radius:12px;
+      border:1px solid var(--border);
+      background:var(--bg-card);
+      text-align:center;
+    }
+    .compare-card--bad{
+      border-color:rgba(239,83,80,.3);
+    }
+    .compare-card--good{
+      border-color:rgba(102,187,106,.3);
+    }
+    .compare-label{
+      display:inline-block;
+      padding:2px 10px;
+      border-radius:99px;
+      font-size:.72rem;
+      font-weight:700;
+      margin-bottom:8px;
+    }
+    .compare-label--bad{
+      background:rgba(239,83,80,.15);
+      color:var(--red);
+    }
+    .compare-label--good{
+      background:rgba(102,187,106,.15);
+      color:var(--green);
+    }
+    .compare-card img{
+      width:100%;
+      border-radius:8px;
+      border:1px solid var(--border);
+    }
+    .compare-card p{
+      color:var(--text-muted);
+      font-size:.78rem;
+      margin-top:8px;
+    }
+
+    /* Note */
+    .tip-note{
+      margin-top:12px;
+      padding:12px 16px;
+      border-radius:10px;
+      font-size:.82rem;
+      line-height:1.7;
+    }
+    .tip-note--warn{
+      background:rgba(255,184,0,.06);
+      border:1px solid rgba(255,184,0,.15);
+      color:var(--gold);
+    }
+    .tip-note--info{
+      background:rgba(102,187,106,.06);
+      border:1px solid rgba(102,187,106,.15);
+      color:var(--green);
+    }
+
+    /* Settings table */
+    .settings-table{
+      width:100%;
+      border-collapse:collapse;
+      margin:12px 0;
+      font-size:.85rem;
+    }
+    .settings-table th{
+      text-align:left;
+      padding:10px 12px;
+      border-bottom:1px solid var(--border);
+      color:var(--text-muted);
+      font-weight:600;
+      font-size:.78rem;
+    }
+    .settings-table td{
+      padding:10px 12px;
+      border-bottom:1px solid var(--border);
+    }
+    .settings-table .val-before{
+      color:var(--red);
+      text-decoration:line-through;
+      opacity:.7;
+    }
+    .settings-table .val-after{
+      color:var(--green);
+      font-weight:700;
+    }
+
+    /* Footer */
+    .guide-footer{
+      text-align:center;
+      padding:40px 24px;
+      border-top:1px solid var(--border);
+    }
+    .guide-footer p{
+      color:var(--text-muted);
+      font-size:.82rem;
+    }
+    .guide-cta{
+      display:inline-block;
+      margin-top:20px;
+      padding:14px 32px;
+      border-radius:12px;
+      background:var(--accent);
+      color:#fff;
+      font-weight:700;
+      font-size:.95rem;
+      transition:transform .2s,box-shadow .2s;
+    }
+    .guide-cta:hover{
+      transform:translateY(-2px);
+      box-shadow:0 8px 24px rgba(255,45,120,.3);
+      text-decoration:none;
+    }
+    .guide-links{
+      display:flex;
+      gap:12px;
+      justify-content:center;
+      margin-top:16px;
+      flex-wrap:wrap;
+    }
+    .guide-links a{
+      padding:10px 24px;
+      border-radius:10px;
+      border:1px solid var(--border);
+      color:var(--text-muted);
+      font-size:.85rem;
+      font-weight:600;
+      transition:all .2s;
+    }
+    .guide-links a:hover{
+      border-color:var(--pink);
+      color:var(--pink);
+      text-decoration:none;
+    }
+
+    @media(max-width:600px){
+      .guide-header h1{font-size:1.5rem}
+      .tips-section h2{font-size:1.1rem}
+      .compare-grid{grid-template-columns:1fr}
+    }
+  </style>
+</head>
+<body>
+
+  <header class="guide-header">
+    <a href="/" class="back-link">&larr; ANIGIFTトップに戻る</a>
+    <h1>配信<span>トラブル対策</span>ガイド</h1>
+    <p>ギフトアニメーションの設定でよくあるトラブルと、その解決策をまとめました。</p>
+  </header>
+
+  <nav class="guide-nav">
+    <a href="#links">リンク整理</a>
+    <a href="#performance">カクつき対策</a>
+    <a href="#source-name">ソース名の変更</a>
+    <a href="/guide.html">基本セットアップ &rarr;</a>
+  </nav>
+
+  <div class="guide-container">
+
+    <!-- ========== A: リンク整理 ========== -->
+    <section class="tips-section" id="links">
+      <div class="tips-section-header">
+        <span class="tips-section-tag tips-section-tag--danger">MOST COMMON</span>
+      </div>
+      <h2>リンクはまとめよう！<br>1ギフト＝1リンク は間違いです</h2>
+      <p class="tips-section-desc">
+        Tikfinityでは、<strong>1つのScreen（リンク）に複数のアクション</strong>をまとめることができます。<br>
+        ギフトごとにリンクを追加すると、配信が重くなったり不安定になる原因に。<br>
+        <strong>リンクは2〜3個にまとめるのが理想です。</strong>
+      </p>
+
+      <!-- Before/After -->
+      <div class="compare-grid">
+        <div class="compare-card compare-card--bad">
+          <span class="compare-label compare-label--bad">&#10060; こうなっていませんか？</span>
+          <img src="/guide/2/ごちゃごちゃリンク画像.jpg" alt="リンクがバラバラの悪い例" loading="lazy" />
+          <p>リンクが大量に並んでいる状態</p>
+        </div>
+        <div class="compare-card compare-card--good">
+          <span class="compare-label compare-label--good">&#10004; こうしましょう！</span>
+          <img src="/guide/2/ブラウザソースを右クリックすると名前を変えられるので、自分が管理しやすい名前で保存するのがおすすめです。.jpg" alt="リンクがまとまった良い例" loading="lazy" />
+          <p>縦動画・横動画で2つにまとめた状態</p>
+        </div>
+      </div>
+
+      <div class="tip-step">
+        <h3><span class="tip-step-num">1</span>Tikfinityのアクション設定を確認</h3>
+        <p>
+          Tikfinityのアクション一覧を確認してください。<br>
+          <strong>同じ比率の動画は、同じScreen番号にまとめましょう。</strong><br>
+          例：横動画はScreen 1、縦動画はScreen 2。
+        </p>
+        <img src="/guide/2/動画の種類、比率、または位置によって、基本的には同じリンクにまとめましょう。リンクは少ないほどいいって感じだね。.jpg" alt="Screenをまとめた設定例" loading="lazy" />
+      </div>
+
+      <div class="tip-step">
+        <h3><span class="tip-step-num">2</span>TikTok LIVE Studioのリンクも整理</h3>
+        <p>
+          TikTok LIVE Studioの左サイドバーにあるリンク一覧も確認。<br>
+          <strong>Tikfinityで使うScreen の数だけリンクがあればOK</strong>です。<br>
+          余分なリンクは削除しましょう。
+        </p>
+        <img src="/guide/2/ブラウザソースを右クリックすると名前を変えられるので、自分が管理しやすい名前で保存するのがおすすめです。.jpg" alt="整理されたLIVE Studioのソース構成" loading="lazy" />
+      </div>
+
+      <div class="tip-note tip-note--warn">
+        &#128161; ブラウザソースを右クリックすると名前を変更できます。「たて動画用リンク」「よこ動画用リンク」など、わかりやすい名前にしておくと管理が楽になります。
+      </div>
+    </section>
+
+    <!-- ========== B: パフォーマンス ========== -->
+    <section class="tips-section" id="performance">
+      <div class="tips-section-header">
+        <span class="tips-section-tag tips-section-tag--danger">IMPORTANT</span>
+      </div>
+      <h2>配信がカクつく・重い場合の対処法</h2>
+      <p class="tips-section-desc">
+        ギフトアニメーションを入れてから配信が重くなった場合、<br>
+        原因のほとんどは<strong>配信設定の数値が高すぎる</strong>ことです。<br>
+        以下の2つの数値を変えるだけで、大幅に改善します。
+      </p>
+
+      <div class="tip-step">
+        <h3><span class="tip-step-num">1</span>「LIVE情報」ボタンの場所を確認</h3>
+        <p>
+          TikTok LIVE Studio画面の<strong>右上</strong>にある「<strong>LIVE情報</strong>」をクリックします。<br>
+          下の画像の矢印の位置にあるボタンです。
+        </p>
+        <img src="/guide/2/スクリーンショット 2026-04-17 141807.jpg" alt="LIVE情報の場所" loading="lazy" />
+      </div>
+
+      <div class="tip-step">
+        <h3><span class="tip-step-num">2</span>「動画の設定」の編集ボタンを押す</h3>
+        <p>
+          「動画の設定」の「<strong>編集</strong>」ボタンを押します。
+        </p>
+        <img src="/guide/2/スクリーンショット 2026-04-17 141903.jpg" alt="動画の設定 編集ボタン" loading="lazy" />
+      </div>
+
+      <div class="tip-step">
+        <h3><span class="tip-step-num">3</span>フレームレートとビットレートを下げる</h3>
+        <p>以下の値に変更してください。これだけで配信の負荷がかなり軽くなります。</p>
+        <table class="settings-table">
+          <tr>
+            <th>設定項目</th>
+            <th>変更前</th>
+            <th>推奨値</th>
+          </tr>
+          <tr>
+            <td>フレームレート</td>
+            <td class="val-before">60</td>
+            <td class="val-after">30</td>
+          </tr>
+          <tr>
+            <td>動画のビットレート</td>
+            <td class="val-before">6400</td>
+            <td class="val-after">4000</td>
+          </tr>
+          <tr>
+            <td>音声ビットレート</td>
+            <td colspan="2">128（そのままでOK）</td>
+          </tr>
+          <tr>
+            <td>エンコーダー</td>
+            <td colspan="2">そのままでOK</td>
+          </tr>
+        </table>
+        <img src="/guide/2/スクリーンショット 2026-04-17 142012.jpg" alt="フレームレートとビットレートの場所" loading="lazy" />
+      </div>
+
+      <div class="tip-step">
+        <h3><span class="tip-step-num">4</span>自動最適化テストを試す</h3>
+        <p>
+          設定画面の上部に「<strong>自動速度テストを許可してください</strong>」というボタンがあります。<br>
+          「<strong>実行する</strong>」を押すと、お使いのPCに合ったおすすめ設定を自動で提案してくれます。
+        </p>
+        <img src="/guide/2/スクリーンショット 2026-04-17 141937.jpg" alt="自動最適化テスト" loading="lazy" />
+        <div class="tip-note tip-note--info">
+          &#9989; リスナーさんはスマホで視聴しているため、フレームレート30でも見た目はほとんど変わりません。安心して下げてください。
+        </div>
+      </div>
+
+      <div class="tip-note tip-note--warn">
+        &#128161; それでも改善しない場合は、TikTok LIVE StudioとTikfinity以外のアプリをできるだけ閉じておくのも効果的です。
+      </div>
+    </section>
+
+    <!-- ========== C: ソース名変更 ========== -->
+    <section class="tips-section" id="source-name">
+      <div class="tips-section-header">
+        <span class="tips-section-tag tips-section-tag--info">TIP</span>
+      </div>
+      <h2>ソースの名前を変更して管理しやすくする</h2>
+      <p class="tips-section-desc">
+        TikTok LIVE Studioでは、追加したリンク（ブラウザソース）の名前を変更できます。<br>
+        「リンク」のままだと、どれがどの動画用かわかりにくいので、<br>
+        <strong>右クリック</strong>から名前を変えておきましょう。
+      </p>
+
+      <div class="compare-grid">
+        <div class="compare-card compare-card--bad">
+          <span class="compare-label compare-label--bad">&#10060; わかりにくい</span>
+          <img src="/guide/2/ごちゃごちゃリンク画像.jpg" alt="リンク名が全部同じ" loading="lazy" />
+          <p>全部「リンク」のまま</p>
+        </div>
+        <div class="compare-card compare-card--good">
+          <span class="compare-label compare-label--good">&#10004; わかりやすい</span>
+          <img src="/guide/2/ブラウザソースを右クリックすると名前を変えられるので、自分が管理しやすい名前で保存するのがおすすめです。.jpg" alt="リンク名を変更済み" loading="lazy" />
+          <p>用途がわかる名前に変更</p>
+        </div>
+      </div>
+    </section>
+
+
+
+  </div>
+
+  <footer class="guide-footer">
+    <p>他にもわからないことがあれば、お気軽にDMでご連絡ください。</p>
+    <div class="guide-links">
+      <a href="/guide.html">&larr; 基本セットアップガイド</a>
+      <a href="/">ANIGIFTトップ</a>
+    </div>
+  </footer>
+
+</body>
+</html>
